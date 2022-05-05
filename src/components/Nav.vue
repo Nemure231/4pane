@@ -3,7 +3,7 @@
 <template>
   <nav class="flex-1 h-full w-full justify-center sticky top-0 z-50">
     <div
-      class="py-1.5 text-gray-200 flex flex-row flex-wrap px-3 justify-between items-center mx-auto w-full bg-[#2155CD]">
+      class="2xl:py-4 py-1.5 text-gray-200 flex flex-row flex-wrap px-3 justify-between items-center mx-auto w-full bg-[#2155CD]">
       <span class="font-semibold lg:text-2xl md:text-2xl text-xl">
         「4Pane」
       </span>

@@ -67,7 +67,7 @@ export default {
     }
   },
   methods: {
-    getLocation(){
+    getLocation() {
       return window.location.href;
     },
     getMimeType(file, fallback = null) {
@@ -271,56 +271,8 @@ export default {
         type: null
       }
     },
-    getBase64(imgUrl, callback) {
-
-      var img = new Image();
-
-      // onload fires when the image is fully loadded, and has width and height
-
-      img.onload = function () {
-
-        var canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-        var dataURL = canvas.toDataURL("image/png"),
-          dataURL = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-
-        callback(dataURL); // the base64 string
-
-      };
-
-      // set attributes and src 
-      img.setAttribute('crossOrigin', 'anonymous'); //
-      img.src = imgUrl;
-
-    },
     loadImage(event) {
-      // let files = '';
-
-      // if (typeof event === 'string') {
-
-      //   const image = new Image();
-      //   image.onload = function () {
-      //     const width = image.width;
-      //     const height = image.height;
-
-      //     const canvas = document.createElement('canvas');
-      //     canvas.width = width;
-      //     canvas.height = height;
-      //     const ctx = canvas.getContext('2d');
-      //     ctx.drawImage(image, 0, 0);
-      //     const base64 = canvas.toDataURL({ format: "png" })
-      //     console.log(base64);
-      //   }
-
-      //   image.src = 'https://cdn.pixabay.com/photo/2015/02/24/15/41/dog-647528__340.jpg';
-
-      // } else {
-        const { files } = event.target;
-      // }
-
+      const { files } = event.target;
       // Reference to the DOM input element
       // Ensure that you have a file before attempting to read it
       if (files && files[0]) {
@@ -436,6 +388,9 @@ export default {
     isUploaded() {
       return this.image.src ? 'block' : 'hidden';
     },
+    isBg() {
+      return this.cropedImg ? '' : 'bg-[#E8F9FD]'
+    }
 
   }
 }
@@ -451,8 +406,8 @@ export default {
           <div
             class="flex lg:gap-12 md:gap-12 sm:gap-14 gap-6 justify-center lg:flex-row md:flex-row flex-col flex-wrap items-center md:mx-3 mx-0">
 
-            <div
-              class="order-1 lg:flex-1 md:flex-1 flex-none bg-[#E8F9FD] rounded-xl 2xl:h-[25rem] 2xl:w-[20rem] lg:h-[20rem] lg:w-[18rem] md:w-72 md:h-72 w-full sm:h-64 h-52">
+            <div :class="isBg"
+              class="order-1 lg:flex-1 md:flex-1 flex-none  rounded-xl 2xl:h-[25rem] 2xl:w-[20rem] lg:h-[20rem] lg:w-[18rem] md:w-72 md:h-72 w-full sm:h-64 h-52">
 
 
               <div
@@ -463,26 +418,28 @@ export default {
                 </cropper>
 
               </div>
-              <div class="lg:mt-3 md:mt-3 sm:mt-3 -mt-5 lg:text-base md:text-base text-sm flex flex-row gap-3 lg:justify-end md:justify-end justify-center items-center">
+              <div
+                class="lg:mt-3 md:mt-3 sm:mt-3 -mt-5 lg:text-base md:text-base sm:text-sm text-xs flex flex-row gap-3 lg:justify-end md:justify-end justify-center items-center">
                 <button @click="getCrop" :class="isUploaded"
                   class="font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white  rounded-md bg-[#0AA1DD]">
                   Crop
                 </button>
-                <button class=" font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white  rounded-md bg-[#0AA1DD]"
+                <button
+                  class=" font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white  rounded-md bg-[#0AA1DD]"
                   @click="$refs.file.click()">
                   <input class="hidden" type="file" ref="file" @change="loadImage($event)" accept="image/*">
-                  Load image
+                  Upload Image
                 </button>
 
               </div>
             </div>
 
             <div
-              class="lg:order-2 md:order-2 order-3 flex-none bg-[#E8F9FD] border border-[#E8F9FD] lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60">
+              class="lg:order-2 md:order-2 order-3 flex-none text-center lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60">
               <template v-if="this.cropedImg">
                 <splitpanes
                   class="bg-cover bg-[#E8F9FD] border border-[#E8F9FD] lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60"
-                  @resize="mk = pane[2].size = $event[0].size, resizeCanvasX()" :style="{
+                  @resize="pane[2].size = $event[0].size, resizeCanvasX()" :style="{
                     backgroundImage: 'url(' + cropedImg + ')',
                     backgroundRepeat: 'no-repeat',
                   }">
@@ -545,9 +502,10 @@ export default {
                 </splitpanes>
               </template>
 
-              <div class="relative flex flex-row gap-3 justify-center items-center mt-3">
+              <div class="relative flex flex-row gap-3 justify-center items-center lg:mt-4 md:mt-4 -mt-2">
                 <button :class="isCroped"
-                  class="absolute font-semibold -bottom-12 px-6 py-1.5 text-white  rounded-md bg-[#0AA1DD]" @click="
+                  class="absolute font-semibold -bottom-12 px-6 py-1.5 lg:text-base md:text-base sm:text-sm text-xs text-white  rounded-md bg-[#0AA1DD]"
+                  @click="
                   dlCanvas('4pane_img_1', 'canvas1'),
                   dlCanvas('4pane_img_2', 'canvas2'),
                   dlCanvas('4pane_img_3', 'canvas3'),
@@ -558,19 +516,17 @@ export default {
 
             </div>
             <div class="lg:order-3 md:order-3 order-2 flex-1 basis-full">
-             
-                 <span class="lg:text-sm md:text-sm text-xs font-semibold">Try Example~</span>
+
+              <span class="lg:text-sm md:text-sm text-xs font-semibold">Try Example~</span>
               <div class="flex flex-row flex-nowrap items-center space-x-6 mt-1">
                 <div v-for="ex in example" :key="ex.id"
                   class=" font-semibold border-dashed border-2 border-[#2155CD] bg-cover cursor-pointer bg-center lg:w-16 lg:h-16 md:w-16 md:h-16 w-12 h-12 text-xs text-white  rounded-md"
                   :style="{
-                      backgroundImage: 'url(' + ex.url + ')',
-                      backgroundRepeat: 'no-repeat',
-                    }"
+                    backgroundImage: 'url(' + ex.url + ')',
+                    backgroundRepeat: 'no-repeat',
+                  }" @click="image.src = `${getLocation()}${ex.url}`">
 
-                    @click="image.src = `${getLocation()}${ex.url}`">
-                  
-                  </div>
+                </div>
 
               </div>
 
