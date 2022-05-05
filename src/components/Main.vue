@@ -267,10 +267,8 @@ export default {
           ctx.drawImage(imageObj, 0, 0);
         };
       });
-
-      const coo = this.mp > 50 ? this.pane[0].size * 5 : this.canvas[2].h * 2;
-      console.log(this.mp)
-      this.resizeImage(this.cropedImg, this.canvas[5].w, this.canvas[5].h, 0, coo, (url) => {
+      // Here is i don't know how the coorect y position for the 5 canvas, fix later for 5 pane
+      this.resizeImage(this.cropedImg, this.canvas[5].w, this.canvas[5].h, 0, this.canvas[1].h, (url) => {
         const canvas = this.$refs.canvas5;
         const ctx = canvas.getContext("2d");
         const imageObj = new Image();
