@@ -284,8 +284,8 @@ export default {
           alert('Please, choose the right format image! The avaiable format is JPG, JPEG, and PNG!');
         }
         // //SIZE IMAGE VALIDATION
-        else if (fileSize >= 1045301) {
-          alert('The maximum size image to upload is 1MB, please reduce your image size before upload again!');
+        else if (fileSize >= 1045301 * 2) {
+          alert('The maximum size image to upload is 2MB, please reduce your image size before upload again!');
         } else {
           // 1. Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
           if (this.image.src) {
