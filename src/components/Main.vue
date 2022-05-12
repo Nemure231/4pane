@@ -10,6 +10,9 @@ export default {
     return {
       ml: 0,
       mp: 0,
+      ms: 0,
+      mk: 0,
+      rotate: false,
       example: [
         {
           id: 1,
@@ -84,6 +87,23 @@ export default {
     }
   },
   mounted() {
+    this.mp = this.pane[0].size
+    this.ml = this.pane[0].size
+
+    this.ms = this.pane[0].size
+    this.mk = this.pane[0].size
+
+    this.canvas[1].w = this.coordinates.width / 2
+    this.canvas[2].w = this.coordinates.width / 2
+    this.canvas[5].w = this.coordinates.width / 2
+
+     this.canvas[3].w = this.coordinates.width / 2
+    this.canvas[4].w = this.coordinates.width / 2
+    this.canvas[6].w = this.coordinates.width / 2
+
+
+
+
 
   },
   methods: {
@@ -158,7 +178,7 @@ export default {
         };
       });
     },
-    setCanvas25() {
+    setCanvas5() {
       const yCanvas = this.coordinates.height / 3 * 2
       const checkYCanvas = this.restart ? this.canvas[1].h : yCanvas
       const checkCoorW = this.restart ? this.canvas[5].w : this.coordinates.width
@@ -242,20 +262,6 @@ export default {
         };
       });
 
-      //  const yCanvas = this.coordinates.height / 3
-      // const checkYCanvas = this.restart ? this.canvas[1].h : yCanvas
-      // const checkCoorW = this.restart ? this.canvas[1].w : this.coordinates.width
-      // const checkCoorH = this.restart ? this.canvas[2].h : this.coordinates.height
-
-      // this.resizeImage(this.cropedImg, checkCoorW, checkCoorH, 0, checkYCanvas, (url) => {
-      //   const canvas = this.$refs.canvas2;
-      //   const ctx = canvas.getContext("2d");
-      //   const imageObj = new Image();
-      //   imageObj.src = url;
-      //   imageObj.onload = function () {
-      //     ctx.drawImage(imageObj, 0, 0);
-      //   };
-      // });
 
 
       this.resizeImage(this.cropedImg, this.canvas[1].w, this.canvas[2].h, 0, this.canvas[1].h, (url) => {
@@ -268,7 +274,9 @@ export default {
         };
       });
       // Here is i don't know how the coorect y position for the 5 canvas, fix later for 5 pane
-      this.resizeImage(this.cropedImg, this.canvas[5].w, this.canvas[5].h, 0, this.canvas[1].h, (url) => {
+      const ma = this.canvas[1].h + this.canvas[2].h
+      console.log(ma)
+      this.resizeImage(this.cropedImg, this.canvas[5].w, this.canvas[5].h, 0, ma, (url) => {
         const canvas = this.$refs.canvas5;
         const ctx = canvas.getContext("2d");
         const imageObj = new Image();
@@ -294,6 +302,18 @@ export default {
 
       this.resizeImage(this.cropedImg, this.canvas[3].w, this.canvas[4].h, this.canvas[1].w, this.canvas[3].h, (url) => {
         const canvas = this.$refs.canvas4;
+        const ctx = canvas.getContext("2d");
+        const imageObj = new Image();
+        imageObj.src = url;
+        imageObj.onload = function () {
+          ctx.drawImage(imageObj, 0, 0);
+        };
+      });
+
+      const ma = this.canvas[3].h + this.canvas[4].h
+      console.log(ma)
+      this.resizeImage(this.cropedImg, this.canvas[6].w, this.canvas[6].h, this.canvas[1].w, ma, (url) => {
+        const canvas = this.$refs.canvas6;
         const ctx = canvas.getContext("2d");
         const imageObj = new Image();
         imageObj.src = url;
@@ -345,6 +365,31 @@ export default {
           ctx.drawImage(imageObj, 0, 0);
         };
       });
+
+      const mas = this.canvas[3].h + this.canvas[4].h
+      // console.log(mas)
+      this.resizeImage(this.cropedImg, this.canvas[6].w, this.canvas[6].h, this.canvas[1].w, mas, (url) => {
+        const canvas = this.$refs.canvas6;
+        const ctx = canvas.getContext("2d");
+        const imageObj = new Image();
+        imageObj.src = url;
+        imageObj.onload = function () {
+          ctx.drawImage(imageObj, 0, 0);
+        };
+      });
+
+
+       const ma = this.canvas[1].h + this.canvas[2].h
+      // console.log(ma)
+      this.resizeImage(this.cropedImg, this.canvas[5].w, this.canvas[5].h, 0, ma, (url) => {
+        const canvas = this.$refs.canvas5;
+        const ctx = canvas.getContext("2d");
+        const imageObj = new Image();
+        imageObj.src = url;
+        imageObj.onload = function () {
+          ctx.drawImage(imageObj, 0, 0);
+        };
+      });
     },
     reset() {
       this.image = {
@@ -389,9 +434,10 @@ export default {
           alert('Please, choose the right format image! The avaiable format is JPG, JPEG, and PNG!');
         }
         //SIZE IMAGE VALIDATION
-        else if (fileSize >= 1045301) {
-          alert('The maximum size image to upload is 1MB, please reduce your image size before upload again!');
-        } else {
+        // else if (fileSize >= 1045301) {
+        //   alert('The maximum size image to upload is 1MB, please reduce your image size before upload again!');
+        // } 
+        else {
 
           // 1. Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
           if (this.image.src) {
@@ -434,7 +480,7 @@ export default {
 
       this.setCanvas1();
       this.setCanvas2();
-      this.setCanvas25();
+      this.setCanvas5();
       this.setCanvas3();
       this.setCanvas4();
       this.setCanvas6();
@@ -450,40 +496,27 @@ export default {
       tmpLink.click();
       document.body.removeChild(tmpLink);
     },
-    dlCanvas2() {
-      var canvas = this.$refs.canvas2
-      var image = canvas.toDataURL();
-      var tmpLink = document.createElement('a');
-      tmpLink.download = '4pane_img_2.png';
-      tmpLink.href = image;
-
-      document.body.appendChild(tmpLink);
-      tmpLink.click();
-      document.body.removeChild(tmpLink);
-    },
-    dlCanvas3() {
-      var canvas = this.$refs.canvas3
-      var image = canvas.toDataURL();
-      var tmpLink = document.createElement('a');
-      tmpLink.download = '4pane_img_3.png';
-      tmpLink.href = image;
-
-      document.body.appendChild(tmpLink);
-      tmpLink.click();
-      document.body.removeChild(tmpLink);
-    },
-    dlCanvas4() {
-      var canvas = this.$refs.canvas4
-      var image = canvas.toDataURL();
-      var tmpLink = document.createElement('a');
-      tmpLink.download = '4pane_img_4.png';
-      tmpLink.href = image;
-      document.body.appendChild(tmpLink);
-      tmpLink.click();
-      document.body.removeChild(tmpLink);
-    },
     cont() {
       return this.canvas[2].h = this.coordinates.height / 2 * (this.ml - this.pane[0].size) / this.ml
+    },
+    rotatePane(){
+      this.rotate =! this.rotate
+
+      var ctx = document.getElementById("canvas1").getContext("2d");
+
+
+      // prep canvas for next actions
+      ctx.translate(75, 75);                   // translate to canvas center
+      ctx.rotate(Math.PI*0.5);                 // add rotation transform
+      ctx.globalCompositeOperation = "copy";   // set comp. mode to "copy"
+
+      ctx.drawImage(ctx.canvas,  0, 0, this.canvas[1].w, this.canvas[1].h,  -75, -75, this.canvas[1].w, this.canvas[1].h);
+      
+      // context.drawImage(imageObj, x, 0, width, height, 0, 0, width, height);
+
+
+
+
     }
   },
   unmounted() {
@@ -498,20 +531,23 @@ export default {
     isUploaded() {
       return this.image.src ? 'block' : 'hidden';
     },
+    isRotate(){
+      return this.rotate ? 'rotate-[270deg]' : 'rotate-0'
+    }
 
   }
 }
 </script>
 <template>
 
-  <main class="w-full flex flex-wrap flex-col justify-center items-center">
+  <main class="w-full flex flex-wrap  flex-col justify-center items-center">
     <section class="flex-1 mt-8 relative w-full">
       <div class="flex justify-center flex-wrap">
         <div class="relative flex-1 2xl:max-w-7xl lg:max-w-5xl md:max-w-3xl sm:max-w-xl max-w-max lg:mx-0 md:mx-0 mx-3">
 
 
           <div
-            class="flex lg:gap-12 md:gap-12 sm:gap-14 gap-6 justify-center lg:flex-row md:flex-row flex-col flex-wrap items-center md:mx-3 mx-0">
+            class=" flex lg:gap-12 md:gap-12 sm:gap-14 gap-6 justify-center lg:flex-row md:flex-row flex-col flex-wrap items-center md:mx-3 mx-0">
 
             <div
               class="order-1 lg:flex-1 md:flex-1 flex-none bg-[#E8F9FD] rounded-xl 2xl:h-[25rem] 2xl:w-[20rem] lg:h-[20rem] lg:w-[18rem] md:w-72 md:h-72 w-full sm:h-64 h-52">
@@ -520,7 +556,7 @@ export default {
               <div
                 class="flex h-full flex-col items-center justify-center lg:w-full md:w-full sm:w-full w-[15rem] mx-auto">
                 <cropper ref="cropper" :src="image.src" :stencil-props="{
-                  aspectRatio: 1 / 1,
+                  aspectRatio: 1/1,
                 }">
                 </cropper>
 
@@ -544,7 +580,7 @@ export default {
             <div
               class="lg:order-2 md:order-2 order-3 flex-none bg-[#E8F9FD] border border-[#E8F9FD] lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60">
               <!-- <template v-if="this.cropedImg"> -->
-              <splitpanes
+              <splitpanes :class="isRotate"
                 class="bg-cover bg-[#E8F9FD] border border-[#E8F9FD] lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60"
                 @resize="pane[2].size = $event[0].size, resizeCanvasX()" :style="{
                   backgroundImage: 'url(' + cropedImg + ')',
@@ -555,7 +591,7 @@ export default {
                     @resize="mp = $event[2].size, ml = $event[1].size, pane[0].size = $event[0].size, pane[2].size = pane[2].size, resizeCanvasY1()"
                     horizontal>
                     <pane :size="pane[0].size < 100 ? pane[3].size : pane[0].size" id="pane1"
-                      class=" group hover:bg-blue-500/20 relative bg-red-200">
+                      class=" group hover:bg-blue-500/20 relative ">
                       <button @click="dlCanvas('4pane_img_1', 'canvas1')" class="justify-center group-hover:block hidden items-center bg-white lg:p-2 md:p-2 p-1.5  rounded-br-md absolute 
                         left-0">
                         <svg class="lg:w-5 lg:h-5 md:h-5 md:w-5 w-4 h-4 fill-[#2155CD]"
@@ -567,7 +603,7 @@ export default {
                         </svg>
                       </button>
                     </pane>
-                    <pane class=" group hover:bg-blue-500/20 relative bg-blue-400"
+                    <pane class=" group hover:bg-blue-500/20 relative "
                       :size="pane[0].size < 100 ? pane[3].size : pane[0].size" ref="pane2" id="pane2">
                       <button @click="dlCanvas('4pane_img_2', 'canvas2')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-br-md absolute 
                       left">
@@ -581,9 +617,9 @@ export default {
                       </button>
                     </pane>
 
-                    <pane class=" group hover:bg-blue-500/20 relative bg-yellow-200"
+                    <pane class=" group hover:bg-blue-500/20 relative"
                       :size="pane[0].size < 100 ? pane[3].size : pane[0].size" id="pane5">
-                      <button @click="dlCanvas('4pane_img_2', 'canvas2')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-br-md absolute 
+                      <button @click="dlCanvas('4pane_img_5', 'canvas5')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-br-md absolute 
                       left">
                         <svg class="lg:w-5 lg:h-5 md:h-5 md:w-5 w-4 h-4 fill-[#2155CD]"
                           xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -600,8 +636,8 @@ export default {
                   </splitpanes>
                 </pane>
                 <pane>
-                  <splitpanes @resize="pane[1].size = $event[0].size, resizeCanvasY2()" horizontal>
-                    <pane class=" group hover:bg-blue-500/20 relative bg-green-200"
+                  <splitpanes @resize="ms = $event[2].size, mk = $event[1].size, pane[1].size = $event[0].size, resizeCanvasY2()" horizontal>
+                    <pane class=" group hover:bg-blue-500/20 relative "
                       :size="pane[1].size < 100 ? pane[3].size : pane[1].size" id="pane3">
                       <button @click="dlCanvas('4pane_img_3', 'canvas3')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-bl-md absolute 
                       right-0">
@@ -614,7 +650,7 @@ export default {
                         </svg>
                       </button>
                     </pane>
-                    <pane class=" group hover:bg-blue-500/20 relative bg-gray-200"
+                    <pane class=" group hover:bg-blue-500/20 relative "
                       :size="pane[1].size < 100 ? pane[3].size : pane[1].size" id="pane4">
                       <button @click="dlCanvas('4pane_img_4', 'canvas4')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-bl-md absolute 
                       right-0">
@@ -628,9 +664,9 @@ export default {
                       </button>
                     </pane>
 
-                    <pane class=" group hover:bg-blue-500/20 relative bg-cyan-300"
+                    <pane class=" group hover:bg-blue-500/20 relative "
                       :size="pane[1].size < 100 ? pane[3].size : pane[1].size" id="pane6">
-                      <button @click="dlCanvas('4pane_img_4', 'canvas4')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-bl-md absolute 
+                      <button @click="dlCanvas('4pane_img_6', 'canvas6')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-bl-md absolute 
                         right-0">
                         <svg class="lg:w-5 lg:h-5 md:h-5 md:w-5 w-4 h-4 fill-[#2155CD]"
                           xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -654,8 +690,13 @@ export default {
                   dlCanvas('4pane_img_1', 'canvas1'),
                   dlCanvas('4pane_img_2', 'canvas2'),
                   dlCanvas('4pane_img_3', 'canvas3'),
-                  dlCanvas('4pane_img_4', 'canvas4')">
+                  dlCanvas('4pane_img_4', 'canvas4'),
+                   dlCanvas('4pane_img_5', 'canvas5'),
+                    dlCanvas('4pane_img_6', 'canvas6')">
                   Download All
+                </button>
+                <button @click="rotatePane">
+                  Rotate
                 </button>
               </div>
 
@@ -679,31 +720,44 @@ export default {
 
           </div>
 
-          <div class="flex-row flex-nowrap flex">
+          <div  
+            class="flex-row flex-nowrap flex">
             <div class="flex-none">
               <div class="flex flex-col items-end">
-                <canvas class="object-cover" :width="canvas[1].w = coordinates.width / 2"
+                <canvas :class="isRotate" class="object-cover" id="canvas1" :width="canvas[1].w = restart ? (coordinates.width * pane[2].size / percent) : (coordinates.width / 2)"
                   :height="canvas[1].h = coordinates.height * pane[0].size / percent" ref="canvas1"></canvas>
 
                 <!-- pane[0].size < 100 ? pane[3].size : pane[0].size
                coordinates.height * (percent - pane[0].size) / percent - (coordinates.height * pane[3].size / percent)
                  -->
-                <canvas class=" object-cover" ref="canvas2" :width="canvas[2].w = coordinates.width / 2"
+
+                 <!-- coordinates.width * pane[2].size / percent -->
+
+                 <!-- canvas[2].w = coordinates.width / 2 -->
+                <canvas class="object-cover" ref="canvas2" :width="canvas[2].w = restart ? (coordinates.width * pane[2].size / percent) : (coordinates.width / 2)"
                   :height="canvas[2].h = coordinates.height * ml / percent"></canvas>
 
 
-                <canvas class=" object-cover" ref="canvas5" :width="canvas[5].w = coordinates.width / 2"
+                <canvas class=" object-cover" ref="canvas5" :width="canvas[5].w = restart ? (coordinates.width * pane[2].size / percent) : (coordinates.width / 2)"
                   :height="canvas[5].h = coordinates.height * mp / percent"></canvas>
               </div>
             </div>
             <div class="flex-none">
               <div class="flex flex-col items-start">
-                <canvas class="object-cover" ref="canvas3" :width="canvas[3].w = coordinates.width / 2"
+                <canvas class="object-cover" ref="canvas3" :width="canvas[3].w = coordinates.width * (percent - pane[2].size) / percent"
+                  :height="canvas[3].h = coordinates.height * pane[1].size / percent"></canvas>
+                <canvas class="object-cover" ref="canvas4" :width="canvas[4].w = coordinates.width * (percent - pane[2].size) / percent"
+                  :height="canvas[4].h = coordinates.height * mk / percent"></canvas>
+                <canvas class="object-cover" ref="canvas6" :width="canvas[6].w = coordinates.width * (percent - pane[2].size) / percent"
+                  :height="canvas[6].h = coordinates.height * ms / percent"></canvas>
+
+
+                  <!-- <canvas class="object-cover" ref="canvas3" :width="canvas[3].w = coordinates.width / 2"
                   :height="canvas[3].h = coordinates.height * pane[1].size / percent"></canvas>
                 <canvas class="object-cover" ref="canvas4" :width="canvas[4].w = coordinates.width / 2"
                   :height="canvas[4].h = coordinates.height * (percent - pane[1].size) / percent / 2"></canvas>
                 <canvas class="object-cover" ref="canvas6" :width="canvas[6].w = coordinates.width / 2"
-                  :height="canvas[6].h = coordinates.height * (percent - pane[1].size) / percent / 2"></canvas>
+                  :height="canvas[6].h = coordinates.height * (percent - pane[1].size) / percent / 2"></canvas> -->
               </div>
             </div>
           </div>
