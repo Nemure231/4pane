@@ -283,11 +283,10 @@ export default {
         if (!validImageTypes.includes(fileType)) {
           alert('Please, choose the right format image! The avaiable format is JPG, JPEG, and PNG!');
         }
-        //SIZE IMAGE VALIDATION
+        // //SIZE IMAGE VALIDATION
         else if (fileSize >= 1045301) {
           alert('The maximum size image to upload is 1MB, please reduce your image size before upload again!');
         } else {
-
           // 1. Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
           if (this.image.src) {
             URL.revokeObjectURL(this.image.src)
@@ -343,38 +342,6 @@ export default {
       tmpLink.click();
       document.body.removeChild(tmpLink);
     },
-    dlCanvas2() {
-      var canvas = this.$refs.canvas2
-      var image = canvas.toDataURL();
-      var tmpLink = document.createElement('a');
-      tmpLink.download = '4pane_img_2.png';
-      tmpLink.href = image;
-
-      document.body.appendChild(tmpLink);
-      tmpLink.click();
-      document.body.removeChild(tmpLink);
-    },
-    dlCanvas3() {
-      var canvas = this.$refs.canvas3
-      var image = canvas.toDataURL();
-      var tmpLink = document.createElement('a');
-      tmpLink.download = '4pane_img_3.png';
-      tmpLink.href = image;
-
-      document.body.appendChild(tmpLink);
-      tmpLink.click();
-      document.body.removeChild(tmpLink);
-    },
-    dlCanvas4() {
-      var canvas = this.$refs.canvas4
-      var image = canvas.toDataURL();
-      var tmpLink = document.createElement('a');
-      tmpLink.download = '4pane_img_4.png';
-      tmpLink.href = image;
-      document.body.appendChild(tmpLink);
-      tmpLink.click();
-      document.body.removeChild(tmpLink);
-    }
   },
   unmounted() {
     if (this.image.src) {
@@ -412,7 +379,7 @@ export default {
 
               <div
                 class="flex h-full flex-col items-center justify-center lg:w-full md:w-full sm:w-full w-[15rem] mx-auto">
-                <cropper ref="cropper" :src="image.src" :stencil-props="{
+                <cropper  ref="cropper" :src="image.src" :stencil-props="{
                   aspectRatio: 1 / 1,
                 }">
                 </cropper>
