@@ -12,6 +12,9 @@ export default {
       mp: 0,
       ms: 0,
       mk: 0,
+      panes: {
+        width: 50,
+      },
       rotate: false,
       example: [
         {
@@ -65,7 +68,7 @@ export default {
           w: 0,
           h: 0,
         },
-         {
+        {
           w: 0,
           h: 0,
         }
@@ -78,7 +81,7 @@ export default {
           size: 33.33333333333333
         },
         {
-          size: 33.33333333333333
+          size: 50
         },
         {
           size: 33.33333333333333
@@ -89,22 +92,11 @@ export default {
   mounted() {
     this.mp = this.pane[0].size
     this.ml = this.pane[0].size
-
     this.ms = this.pane[0].size
     this.mk = this.pane[0].size
-
-    this.canvas[1].w = this.coordinates.width / 2
-    this.canvas[2].w = this.coordinates.width / 2
-    this.canvas[5].w = this.coordinates.width / 2
-
-     this.canvas[3].w = this.coordinates.width / 2
-    this.canvas[4].w = this.coordinates.width / 2
-    this.canvas[6].w = this.coordinates.width / 2
-
-
-
-
-
+  },
+  updated(){
+    this.setCanvas()
   },
   methods: {
     getLocation() {
@@ -134,11 +126,8 @@ export default {
     resizeImage(url, width, height, x, y, callback) {
       var canvas = document.createElement("canvas");
       var context = canvas.getContext("2d");
-
-
       canvas.width = width;
       canvas.height = height;
-
 
       const imageObj = new Image();
       imageObj.src = url;
@@ -180,7 +169,7 @@ export default {
     },
     setCanvas5() {
       const yCanvas = this.coordinates.height / 3 * 2
-      const checkYCanvas = this.restart ? this.canvas[1].h : yCanvas
+      const checkYCanvas = this.restart ? this.canvas[1].h + this.canvas[2].h : yCanvas
       const checkCoorW = this.restart ? this.canvas[5].w : this.coordinates.width
       const checkCoorH = this.restart ? this.canvas[5].h : this.coordinates.height
 
@@ -235,7 +224,7 @@ export default {
       const xCanvas = this.coordinates.width / 2
 
       const checkXCanvas = this.restart ? this.canvas[1].w : xCanvas
-      const checkYCanvas = this.restart ? this.canvas[3].h : yCanvas
+      const checkYCanvas = this.restart ? this.canvas[3].h + this.canvas[4].h : yCanvas
       const checkCoorW = this.restart ? this.canvas[6].w : this.coordinates.width
       const checkCoorH = this.restart ? this.canvas[6].h : this.coordinates.height
 
@@ -262,8 +251,6 @@ export default {
         };
       });
 
-
-
       this.resizeImage(this.cropedImg, this.canvas[1].w, this.canvas[2].h, 0, this.canvas[1].h, (url) => {
         const canvas = this.$refs.canvas2;
         const ctx = canvas.getContext("2d");
@@ -275,7 +262,6 @@ export default {
       });
       // Here is i don't know how the coorect y position for the 5 canvas, fix later for 5 pane
       const ma = this.canvas[1].h + this.canvas[2].h
-      console.log(ma)
       this.resizeImage(this.cropedImg, this.canvas[5].w, this.canvas[5].h, 0, ma, (url) => {
         const canvas = this.$refs.canvas5;
         const ctx = canvas.getContext("2d");
@@ -311,7 +297,6 @@ export default {
       });
 
       const ma = this.canvas[3].h + this.canvas[4].h
-      console.log(ma)
       this.resizeImage(this.cropedImg, this.canvas[6].w, this.canvas[6].h, this.canvas[1].w, ma, (url) => {
         const canvas = this.$refs.canvas6;
         const ctx = canvas.getContext("2d");
@@ -334,7 +319,6 @@ export default {
           ctx.drawImage(imageObj, 0, 0);
         };
       });
-
 
       this.resizeImage(this.cropedImg, this.canvas[1].w, this.canvas[2].h, 0, this.canvas[1].h, (url) => {
         const canvas = this.$refs.canvas2;
@@ -367,7 +351,6 @@ export default {
       });
 
       const mas = this.canvas[3].h + this.canvas[4].h
-      // console.log(mas)
       this.resizeImage(this.cropedImg, this.canvas[6].w, this.canvas[6].h, this.canvas[1].w, mas, (url) => {
         const canvas = this.$refs.canvas6;
         const ctx = canvas.getContext("2d");
@@ -379,8 +362,7 @@ export default {
       });
 
 
-       const ma = this.canvas[1].h + this.canvas[2].h
-      // console.log(ma)
+      const ma = this.canvas[1].h + this.canvas[2].h
       this.resizeImage(this.cropedImg, this.canvas[5].w, this.canvas[5].h, 0, ma, (url) => {
         const canvas = this.$refs.canvas5;
         const ctx = canvas.getContext("2d");
@@ -477,7 +459,8 @@ export default {
       const { coordinates, canvas, } = this.$refs.cropper.getResult();
       this.coordinates = coordinates;
       this.cropedImg = canvas.toDataURL();
-
+    },
+    setCanvas(){
       this.setCanvas1();
       this.setCanvas2();
       this.setCanvas5();
@@ -496,27 +479,19 @@ export default {
       tmpLink.click();
       document.body.removeChild(tmpLink);
     },
-    cont() {
-      return this.canvas[2].h = this.coordinates.height / 2 * (this.ml - this.pane[0].size) / this.ml
-    },
-    rotatePane(){
-      this.rotate =! this.rotate
+
+    // WIP
+    rotatePane() {
+      this.rotate = !this.rotate
 
       var ctx = document.getElementById("canvas1").getContext("2d");
 
-
       // prep canvas for next actions
       ctx.translate(75, 75);                   // translate to canvas center
-      ctx.rotate(Math.PI*0.5);                 // add rotation transform
+      ctx.rotate(Math.PI * 0.5);                 // add rotation transform
       ctx.globalCompositeOperation = "copy";   // set comp. mode to "copy"
 
-      ctx.drawImage(ctx.canvas,  0, 0, this.canvas[1].w, this.canvas[1].h,  -75, -75, this.canvas[1].w, this.canvas[1].h);
-      
-      // context.drawImage(imageObj, x, 0, width, height, 0, 0, width, height);
-
-
-
-
+      ctx.drawImage(ctx.canvas, 0, 0, this.canvas[1].w, this.canvas[1].h, -75, -75, this.canvas[1].w, this.canvas[1].h);
     }
   },
   unmounted() {
@@ -531,7 +506,7 @@ export default {
     isUploaded() {
       return this.image.src ? 'block' : 'hidden';
     },
-    isRotate(){
+    isRotate() {
       return this.rotate ? 'rotate-[270deg]' : 'rotate-0'
     }
 
@@ -544,8 +519,6 @@ export default {
     <section class="flex-1 mt-8 relative w-full">
       <div class="flex justify-center flex-wrap">
         <div class="relative flex-1 2xl:max-w-7xl lg:max-w-5xl md:max-w-3xl sm:max-w-xl max-w-max lg:mx-0 md:mx-0 mx-3">
-
-
           <div
             class=" flex lg:gap-12 md:gap-12 sm:gap-14 gap-6 justify-center lg:flex-row md:flex-row flex-col flex-wrap items-center md:mx-3 mx-0">
 
@@ -556,17 +529,21 @@ export default {
               <div
                 class="flex h-full flex-col items-center justify-center lg:w-full md:w-full sm:w-full w-[15rem] mx-auto">
                 <cropper ref="cropper" :src="image.src" :stencil-props="{
-                  aspectRatio: 1/1,
+                  aspectRatio: 1 / 1,
                 }">
                 </cropper>
-
               </div>
               <div
                 class="lg:mt-3 md:mt-3 sm:mt-3 -mt-5 lg:text-base md:text-base text-sm flex flex-row gap-3 lg:justify-end md:justify-end justify-center items-center">
-                <button @click="getCrop" :class="isUploaded"
+                <button @click="getCrop(), setCanvas()" :class="isUploaded"
                   class="font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white  rounded-md bg-[#0AA1DD]">
                   Crop
                 </button>
+                <button @click="setCanvas()" :class="isUploaded"
+                  class="font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white  rounded-md bg-[#0AA1DD]">
+                  Combine
+                </button>
+                
                 <button
                   class=" font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white  rounded-md bg-[#0AA1DD]"
                   @click="$refs.file.click()">
@@ -588,7 +565,7 @@ export default {
                 }">
                 <pane>
                   <splitpanes
-                    @resize="mp = $event[2].size, ml = $event[1].size, pane[0].size = $event[0].size, pane[2].size = pane[2].size, resizeCanvasY1()"
+                    @resize="mp = $event[2].size, ml = $event[1].size, pane[0].size = $event[0].size, resizeCanvasY1()"
                     horizontal>
                     <pane :size="pane[0].size < 100 ? pane[3].size : pane[0].size" id="pane1"
                       class=" group hover:bg-blue-500/20 relative ">
@@ -630,13 +607,12 @@ export default {
                         </svg>
                       </button>
                     </pane>
-
-
-
                   </splitpanes>
                 </pane>
                 <pane>
-                  <splitpanes @resize="ms = $event[2].size, mk = $event[1].size, pane[1].size = $event[0].size, resizeCanvasY2()" horizontal>
+                  <splitpanes
+                    @resize="ms = $event[2].size, mk = $event[1].size, pane[1].size = $event[0].size, resizeCanvasY2()"
+                    horizontal>
                     <pane class=" group hover:bg-blue-500/20 relative "
                       :size="pane[1].size < 100 ? pane[3].size : pane[1].size" id="pane3">
                       <button @click="dlCanvas('4pane_img_3', 'canvas3')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-bl-md absolute 
@@ -691,8 +667,8 @@ export default {
                   dlCanvas('4pane_img_2', 'canvas2'),
                   dlCanvas('4pane_img_3', 'canvas3'),
                   dlCanvas('4pane_img_4', 'canvas4'),
-                   dlCanvas('4pane_img_5', 'canvas5'),
-                    dlCanvas('4pane_img_6', 'canvas6')">
+                  dlCanvas('4pane_img_5', 'canvas5'),
+                  dlCanvas('4pane_img_6', 'canvas6')">
                   Download All
                 </button>
                 <button @click="rotatePane">
@@ -720,44 +696,33 @@ export default {
 
           </div>
 
-          <div  
-            class="flex-row flex-nowrap flex">
+          <div class="flex-row flex-nowrap flex">
             <div class="flex-none">
               <div class="flex flex-col items-end">
-                <canvas :class="isRotate" class="object-cover" id="canvas1" :width="canvas[1].w = restart ? (coordinates.width * pane[2].size / percent) : (coordinates.width / 2)"
+                <canvas :class="isRotate" class="object-cover" id="canvas1"
+                  :width="canvas[1].w = restart ? (coordinates.width * pane[2].size / percent) : (coordinates.width / 2)"
                   :height="canvas[1].h = coordinates.height * pane[0].size / percent" ref="canvas1"></canvas>
-
-                <!-- pane[0].size < 100 ? pane[3].size : pane[0].size
-               coordinates.height * (percent - pane[0].size) / percent - (coordinates.height * pane[3].size / percent)
-                 -->
-
-                 <!-- coordinates.width * pane[2].size / percent -->
-
-                 <!-- canvas[2].w = coordinates.width / 2 -->
-                <canvas class="object-cover" ref="canvas2" :width="canvas[2].w = restart ? (coordinates.width * pane[2].size / percent) : (coordinates.width / 2)"
+                <canvas class="object-cover" ref="canvas2"
+                  :width="canvas[2].w = restart ? (coordinates.width * pane[2].size / percent) : (coordinates.width / 2)"
                   :height="canvas[2].h = coordinates.height * ml / percent"></canvas>
 
 
-                <canvas class=" object-cover" ref="canvas5" :width="canvas[5].w = restart ? (coordinates.width * pane[2].size / percent) : (coordinates.width / 2)"
+                <canvas class=" object-cover" ref="canvas5"
+                  :width="canvas[5].w = restart ? (coordinates.width * pane[2].size / percent) : (coordinates.width / 2)"
                   :height="canvas[5].h = coordinates.height * mp / percent"></canvas>
               </div>
             </div>
             <div class="flex-none">
               <div class="flex flex-col items-start">
-                <canvas class="object-cover" ref="canvas3" :width="canvas[3].w = coordinates.width * (percent - pane[2].size) / percent"
+                <canvas class="object-cover" ref="canvas3"
+                  :width="canvas[3].w = coordinates.width * (percent - pane[2].size) / percent"
                   :height="canvas[3].h = coordinates.height * pane[1].size / percent"></canvas>
-                <canvas class="object-cover" ref="canvas4" :width="canvas[4].w = coordinates.width * (percent - pane[2].size) / percent"
+                <canvas class="object-cover" ref="canvas4"
+                  :width="canvas[4].w = coordinates.width * (percent - pane[2].size) / percent"
                   :height="canvas[4].h = coordinates.height * mk / percent"></canvas>
-                <canvas class="object-cover" ref="canvas6" :width="canvas[6].w = coordinates.width * (percent - pane[2].size) / percent"
+                <canvas class="object-cover" ref="canvas6"
+                  :width="canvas[6].w = coordinates.width * (percent - pane[2].size) / percent"
                   :height="canvas[6].h = coordinates.height * ms / percent"></canvas>
-
-
-                  <!-- <canvas class="object-cover" ref="canvas3" :width="canvas[3].w = coordinates.width / 2"
-                  :height="canvas[3].h = coordinates.height * pane[1].size / percent"></canvas>
-                <canvas class="object-cover" ref="canvas4" :width="canvas[4].w = coordinates.width / 2"
-                  :height="canvas[4].h = coordinates.height * (percent - pane[1].size) / percent / 2"></canvas>
-                <canvas class="object-cover" ref="canvas6" :width="canvas[6].w = coordinates.width / 2"
-                  :height="canvas[6].h = coordinates.height * (percent - pane[1].size) / percent / 2"></canvas> -->
               </div>
             </div>
           </div>
