@@ -818,6 +818,7 @@ export default {
 
             <div :class="[isBg, isMargin]"
               class="flex-none text-center relative lg:mt-0 md:mt-0  lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60">
+
               <template v-if="this.cropedImg">
 
                 <span class="absolute -top-6 right-0 text-black rounded text-sm font-semibold py-0.5 px-3 bg-[#E8F9FD]"
