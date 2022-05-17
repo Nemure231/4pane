@@ -738,7 +738,7 @@ export default {
 <template>
 
   <main class="w-full flex flex-wrap  flex-col justify-center items-center">
-    <section class="flex-1 mt-16 relative w-full">
+    <section class="flex-1 mt-12 relative w-full">
       <div class="flex justify-center flex-wrap">
         <div class="relative flex-1 2xl:max-w-7xl lg:max-w-5xl md:max-w-3xl sm:max-w-xl max-w-max lg:mx-0 md:mx-0 mx-3">
           <div
@@ -775,7 +775,7 @@ export default {
                   <div class="flex items-center">
                     <input v-model="urlImg"
                       class="relative border w-full border-gray-400 rounded-md pl-3 lg:pr-14 md:pr-14 pr-14 lg:py-1.5 md:py-1.5 py-2 focus:outline-none"
-                      type="url" placeholder="Link ....">
+                      type="url" placeholder="Link/Local Image ....">
 
                     <button
                       class="absolute  right-1 font-semibold lg:px-3  lg:py-1 md:px-3 md:py-1 px-3 py-1 text-white  rounded-md bg-[#0AA1DD]"
@@ -831,8 +831,8 @@ export default {
                   v-text="pickPane.paneName"></span>
 
                   <div class="absolute bg-cover bg-center inset-0 top-2 flex justify-center items-center">
-                     <svg :class="isLoading"
-                       class="animate-spin h-20 w-20 text-[#2155cd]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                     <svg 
+                       class="animate-spin h-12 w-12 text-[#2155cd]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
@@ -1036,6 +1036,7 @@ export default {
               </div>
               <OnClickOutside @trigger="closeModal()">
                 <div class="px-4 pt-10 pb-4 h-auto lg:w-80 md:w-80 w-60">
+                  <p class="text-xs mb-3 bg-[#E8F9FD] py-0.5 px-1 font-medium rounded text-center">Choose and then start resize the panel.</p>
                   <div class="flex flex-row flex-wrap gap-3 justify-center items-center">
                     <div @click="this.$refs.pickpane0.click()" :class="pickPane.id == 0 ? 'bg-[#E8F9FD]' : 'bg-white'"
                       class="cursor-pointer grid relative grid-rows-2 grid-flow-col lg:gap-1 md:gap-1 gap-0.5 lg:h-20 md:w-20 lg:w-20 md:h-20 w-16 h-16 p-2 rounded-md hover:bg-[#E8F9FD]">
