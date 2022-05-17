@@ -19,6 +19,7 @@ export default {
       dropdown: false,
       modal: false,
       urlImg: '',
+      // loadingImg:  'img/loading/1.svg',
       selectExample: '',
       result: {
         pane: [
@@ -100,6 +101,7 @@ export default {
           w: 0,
           h: 0,
         },
+
       ],
       pane: [
         {
@@ -109,7 +111,7 @@ export default {
           size: 33.33333333333333
         },
         {
-          size: 50
+          size: 33.33333333333333
         },
         {
           size: 33.33333333333333
@@ -130,18 +132,15 @@ export default {
     }
   },
   mounted() {
-    this.loadSize();
+    this.pane[5].size = this.pane[2].size
+    this.pane[4].size = this.pane[2].size
+    this.pane[6].size = this.pane[2].size
+    this.pane[7].size = this.pane[2].size
   },
   updated() {
     this.setCanvas()
   },
   methods: {
-    loadSize() {
-      this.pane[5].size = this.pane[2].size
-      this.pane[4].size = this.pane[2].size
-      this.pane[6].size = this.pane[2].size
-      this.pane[7].size = this.pane[2].size
-    },
     openModal() {
       return this.modal = !this.modal;
     },
@@ -292,7 +291,7 @@ export default {
       this.loading = true
 
       setTimeout(() => {
-        this.loading = false
+       this.loading = false
       }, "2000");
 
       this.restart = true
@@ -325,12 +324,14 @@ export default {
           ctx.drawImage(imageObj, 0, 0);
         };
       });
+
     },
+
     resizeCanvasY2() {
       this.loading = true
 
       setTimeout(() => {
-        this.loading = false
+       this.loading = false
       }, "2000");
 
       this.restart = true
@@ -369,7 +370,7 @@ export default {
       this.loading = true
 
       setTimeout(() => {
-        this.loading = false
+       this.loading = false
       }, "2000");
 
       this.restart = true
@@ -514,10 +515,12 @@ export default {
         if (!validImageTypes.includes(fileType)) {
           alert('Please, choose the right format image! The avaiable format is JPG, JPEG, and PNG!');
         }
-        //SIZE IMAGE VALIDATION
-        else if (fileSize >= 1045301 * 2) {
-          alert('The maximum size image to upload is 2MB, please reduce your image size before upload again!');
-        } else {
+        // SIZE IMAGE VALIDATION
+        // else if (fileSize >= 1045301 * 2) {
+        //   alert('The maximum size image to upload is 1MB, please reduce your image size before upload again!');
+        // }
+        else {
+
           // 1. Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
           if (this.image.src) {
             URL.revokeObjectURL(this.image.src)
@@ -644,6 +647,7 @@ export default {
       this.result.pane[0].size = 33.33333333333333
       this.result.pane[1].size = null
       this.result.pane[2].size = 33.33333333333333
+
       this.result.pane[3].size = 33.33333333333333
       this.result.pane[4].size = null
       this.result.pane[5].size = 33.33333333333333
@@ -653,6 +657,7 @@ export default {
       this.result.pane[0].size = 0
       this.result.pane[1].size = null
       this.result.pane[2].size = 0
+
       this.result.pane[3].size = 33.33333333333333
       this.result.pane[4].size = null
       this.result.pane[5].size = 33.33333333333333
@@ -669,6 +674,7 @@ export default {
       this.result.pane[6].size = 50
     },
 
+    // WIP
     sixResult() {
       this.result.pane[0].size = 0
       this.result.pane[1].size = 0
@@ -678,6 +684,7 @@ export default {
       this.result.pane[5].size = null
       this.result.pane[6].size = 50
     },
+    //wip
     sevenResult() {
       this.result.pane[0].size = 0
       this.result.pane[1].size = null
@@ -688,6 +695,7 @@ export default {
       this.result.pane[5].size = 33.33333333333333
       this.result.pane[6].size = 66.66666666666666
     },
+
 
     // WIP
     // rotatePane() {
@@ -721,7 +729,7 @@ export default {
     isMargin() {
       return this.cropedImg ? 'mt-44' : 'mt-28'
     },
-    isLoading() {
+    isLoading(){
       return this.loading ? 'block' : 'hidden'
     }
   }
@@ -743,20 +751,22 @@ export default {
               <div
                 class="flex h-full flex-col items-center justify-center lg:w-full md:w-full sm:w-full w-[18rem] mx-auto">
                 <cropper ref="cropper" :src="image.src" :stencil-props="{
-                  //WIP
                   // aspectRatio: 16 / 11,
                   // aspectRatio: 11 / 16,
                   aspectRatio: 1 / 1,
+                
                 }">
                 </cropper>
               </div>
+
+
+
               <div
                 class="lg:mt-3 md:mt-3 sm:mt-3 mt-6 lg:text-base  flex-wrap md:text-base sm:text-sm text-xs flex flex-row gap-3 lg:justify-start md:justify-start justify-center items-center">
                 <select @change="image.src = selectExample" v-model="selectExample" name="example"
                   class="text-gray-500 border lg:w-1/5 w-full border-gray-400 rounded-md px-3 lg:py-1.5 md:py-1.5 py-2 focus:outline-none">
                   <option selected value="">Example</option>
                   <option v-text="ex.name" v-for="ex in example" :key="ex.id" :value="`${getLocation()}${ex.url}`">
-
 
                   </option>
                 </select>
@@ -780,7 +790,6 @@ export default {
                         </path>
                       </svg>
                     </button>
-
 
                   </div>
                 </div>
@@ -809,8 +818,6 @@ export default {
                     Panel
                   </button>
 
-
-
                 </div>
 
               </div>
@@ -818,21 +825,18 @@ export default {
 
             <div :class="[isBg, isMargin]"
               class="flex-none text-center relative lg:mt-0 md:mt-0  lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60">
-
               <template v-if="this.cropedImg">
 
                 <span class="absolute -top-6 right-0 text-black rounded text-sm font-semibold py-0.5 px-3 bg-[#E8F9FD]"
                   v-text="pickPane.paneName"></span>
 
-                <div class="absolute bg-cover bg-center inset-0 top-2 flex justify-center items-center">
-                  <svg :class="isLoading" class="animate-spin h-20 w-20 text-[#2155cd]"
-                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                    </path>
-                  </svg>
-                </div>
+                  <div class="absolute bg-cover bg-center inset-0 top-2 flex justify-center items-center">
+                     <svg :class="isLoading"
+                       class="animate-spin h-20 w-20 text-[#2155cd]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                  </div>
                 <splitpanes
                   class="bg-cover mt-1 bg-[#E8F9FD] border border-[#E8F9FD] lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60"
                   @resized="pane[0].size = $event[0].size, resizeCanvasX()" :style="{
@@ -1000,7 +1004,6 @@ export default {
                 <canvas class="object-cover" ref="canvas5"
                   :width="canvas[5].w = coordinates.width * (percent - pane[0].size) / percent"
                   :height="canvas[5].h = coordinates.height * pane[6].size / percent"></canvas>
-
               </div>
             </div>
           </div>
