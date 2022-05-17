@@ -726,8 +726,11 @@ export default {
     isBg() {
       return this.image.src ? '' : 'bg-[#E8F9FD]'
     },
+    isBg2() {
+      return this.cropedImg ? '' : 'bg-[#E8F9FD]'
+    },
     isMargin() {
-      return this.cropedImg ? 'mt-44' : 'mt-28'
+      return this.image.src ? 'mt-44' : 'mt-32'
     },
     isLoading(){
       return this.loading ? 'block' : 'hidden'
@@ -823,7 +826,7 @@ export default {
               </div>
             </div>
 
-            <div :class="[isBg, isMargin]"
+            <div :class="[isBg2, isMargin]"
               class="flex-none text-center relative lg:mt-0 md:mt-0  lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60">
               <template v-if="this.cropedImg">
 
@@ -837,7 +840,7 @@ export default {
                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
                   </div>
-                <splitpanes
+                <splitpanes 
                   class="bg-cover mt-1 bg-[#E8F9FD] border border-[#E8F9FD] lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60"
                   @resized="pane[0].size = $event[0].size, resizeCanvasX()" :style="{
                     backgroundImage: 'url(' + cropedImg + ')',
