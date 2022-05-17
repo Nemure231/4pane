@@ -19,7 +19,6 @@ export default {
       dropdown: false,
       modal: false,
       urlImg: '',
-      // loadingImg:  'img/loading/1.svg',
       selectExample: '',
       result: {
         pane: [
@@ -132,15 +131,18 @@ export default {
     }
   },
   mounted() {
-    this.pane[5].size = this.pane[2].size
-    this.pane[4].size = this.pane[2].size
-    this.pane[6].size = this.pane[2].size
-    this.pane[7].size = this.pane[2].size
+    this.loadSize();
   },
   updated() {
     this.setCanvas()
   },
   methods: {
+    loadSize() {
+      this.pane[5].size = this.pane[2].size
+      this.pane[4].size = this.pane[2].size
+      this.pane[6].size = this.pane[2].size
+      this.pane[7].size = this.pane[2].size
+    },
     openModal() {
       return this.modal = !this.modal;
     },
@@ -291,7 +293,7 @@ export default {
       this.loading = true
 
       setTimeout(() => {
-       this.loading = false
+        this.loading = false
       }, "2000");
 
       this.restart = true
@@ -329,7 +331,7 @@ export default {
       this.loading = true
 
       setTimeout(() => {
-       this.loading = false
+        this.loading = false
       }, "2000");
 
       this.restart = true
@@ -368,7 +370,7 @@ export default {
       this.loading = true
 
       setTimeout(() => {
-       this.loading = false
+        this.loading = false
       }, "2000");
 
       this.restart = true
@@ -513,11 +515,10 @@ export default {
         if (!validImageTypes.includes(fileType)) {
           alert('Please, choose the right format image! The avaiable format is JPG, JPEG, and PNG!');
         }
-        // SIZE IMAGE VALIDATION
-        // else if (fileSize >= 1045301 * 2) {
-        //   alert('The maximum size image to upload is 1MB, please reduce your image size before upload again!');
-        // }
-        else {
+        //SIZE IMAGE VALIDATION
+        else if (fileSize >= 1045301 * 2) {
+          alert('The maximum size image to upload is 2MB, please reduce your image size before upload again!');
+        } else {
 
           // 1. Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
           if (this.image.src) {
@@ -694,7 +695,6 @@ export default {
       this.result.pane[6].size = 66.66666666666666
     },
 
-
     // WIP
     // rotatePane() {
     //   this.rotate = !this.rotate
@@ -727,7 +727,7 @@ export default {
     isMargin() {
       return this.cropedImg ? 'mt-44' : 'mt-28'
     },
-    isLoading(){
+    isLoading() {
       return this.loading ? 'block' : 'hidden'
     }
   }
@@ -749,16 +749,13 @@ export default {
               <div
                 class="flex h-full flex-col items-center justify-center lg:w-full md:w-full sm:w-full w-[18rem] mx-auto">
                 <cropper ref="cropper" :src="image.src" :stencil-props="{
+                  //WIP
                   // aspectRatio: 16 / 11,
                   // aspectRatio: 11 / 16,
                   aspectRatio: 1 / 1,
-                
                 }">
                 </cropper>
               </div>
-
-
-
               <div
                 class="lg:mt-3 md:mt-3 sm:mt-3 mt-6 lg:text-base  flex-wrap md:text-base sm:text-sm text-xs flex flex-row gap-3 lg:justify-start md:justify-start justify-center items-center">
                 <select @change="image.src = selectExample" v-model="selectExample" name="example"
@@ -789,6 +786,7 @@ export default {
                       </svg>
                     </button>
 
+
                   </div>
                 </div>
                 <div class="flex flex-row gap-x-3 lg:w-auto  w-full">
@@ -816,6 +814,7 @@ export default {
                     Panel
                   </button>
 
+
                 </div>
 
               </div>
@@ -828,13 +827,15 @@ export default {
                 <span class="absolute -top-6 right-0 text-black rounded text-sm font-semibold py-0.5 px-3 bg-[#E8F9FD]"
                   v-text="pickPane.paneName"></span>
 
-                  <div class="absolute bg-cover bg-center inset-0 top-2 flex justify-center items-center">
-                     <svg :class="isLoading"
-                       class="animate-spin h-20 w-20 text-[#2155cd]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                  </div>
+                <div class="absolute bg-cover bg-center inset-0 top-2 flex justify-center items-center">
+                  <svg :class="isLoading" class="animate-spin h-20 w-20 text-[#2155cd]"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                    </path>
+                  </svg>
+                </div>
                 <splitpanes
                   class="bg-cover mt-1 bg-[#E8F9FD] border border-[#E8F9FD] lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60"
                   @resized="pane[0].size = $event[0].size, resizeCanvasX()" :style="{
