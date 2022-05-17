@@ -34,7 +34,7 @@ export default {
       dropdown: false,
       modal: false,
       urlImg: '',
-      loadingImg:  'img/loading/1.svg',
+      // loadingImg:  'img/loading/1.svg',
       selectExample: '',
 >>>>>>> b2a8900 (add loading)
       result: {
@@ -925,8 +925,12 @@ export default {
 >>>>>>> dc3a783 (add option pane)
 =======
     isLoading(){
+<<<<<<< HEAD
       return this.loading ? this.loadingImg : this.cropedImg;
 >>>>>>> b2a8900 (add loading)
+=======
+      return this.loading ? 'block' : 'hidden'
+>>>>>>> 6576a56 (change style loading)
     }
   }
 }
@@ -1105,10 +1109,17 @@ export default {
                 <span class="absolute -top-6 right-0 text-black rounded text-sm font-semibold py-0.5 px-3 bg-[#E8F9FD]"
                   v-text="pickPane.paneName"></span>
 
+                  <div class="absolute bg-cover bg-center inset-0 top-2 flex justify-center items-center">
+                     <svg :class="isLoading"
+                       class="animate-spin h-20 w-20 text-[#2155cd]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                  </div>
                 <splitpanes
                   class="bg-cover mt-1 bg-[#E8F9FD] border border-[#E8F9FD] lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60"
                   @resized="pane[0].size = $event[0].size, resizeCanvasX()" :style="{
-                    backgroundImage: 'url(' + isLoading + ')',
+                    backgroundImage: 'url(' + cropedImg + ')',
                     backgroundRepeat: 'no-repeat',
                   }">
                   <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[6].size"
