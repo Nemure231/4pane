@@ -12,11 +12,15 @@ export default {
     return {
       // rotate: false,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b2a8900 (add loading)
       loading: false,
       pickPane: {
         id: 0,
         paneName: 'Free Move',
       },
+<<<<<<< HEAD
       dropdown: false,
       modal: false,
       urlImg: '',
@@ -26,6 +30,13 @@ export default {
       dropdown: false,
       modal: false,
 >>>>>>> dc3a783 (add option pane)
+=======
+      dropdown: false,
+      modal: false,
+      urlImg: '',
+      loadingImg:  'img/loading/1.svg',
+      selectExample: '',
+>>>>>>> b2a8900 (add loading)
       result: {
         pane: [
           {
@@ -38,11 +49,14 @@ export default {
             size: null,
           },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 
 >>>>>>> dc3a783 (add option pane)
+=======
+>>>>>>> b2a8900 (add loading)
           {
             size: null,
           },
@@ -330,7 +344,11 @@ export default {
       this.loading = true
 
       setTimeout(() => {
+<<<<<<< HEAD
         this.loading = false
+=======
+       this.loading = false
+>>>>>>> b2a8900 (add loading)
       }, "2000");
 
       this.restart = true
@@ -391,7 +409,11 @@ export default {
       this.loading = true
 
       setTimeout(() => {
+<<<<<<< HEAD
         this.loading = false
+=======
+       this.loading = false
+>>>>>>> b2a8900 (add loading)
       }, "2000");
 
       this.restart = true
@@ -430,7 +452,11 @@ export default {
       this.loading = true
 
       setTimeout(() => {
+<<<<<<< HEAD
         this.loading = false
+=======
+       this.loading = false
+>>>>>>> b2a8900 (add loading)
       }, "2000");
 
       this.restart = true
@@ -651,11 +677,15 @@ export default {
     },
     changePane() {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b2a8900 (add loading)
       if (this.pickPane.id == 0) {
         this.zeroResult();
         this.pickPane.paneName = 'Free Move'
       }
       if (this.pickPane.id == 1) {
+<<<<<<< HEAD
         this.oneResult();
         this.pickPane.paneName = '2 Panel Horizontal'
       }
@@ -696,28 +726,49 @@ export default {
 =======
 
       if (this.pickPane == 1) {
+=======
+>>>>>>> b2a8900 (add loading)
         this.oneResult();
+        this.pickPane.paneName = '2 Panel Horizontal'
       }
-      if (this.pickPane == 2) {
+      if (this.pickPane.id == 2) {
         this.twoResult();
+        this.pickPane.paneName = '2 Panel Vertical'
       }
-      if (this.pickPane == 3) {
+      if (this.pickPane.id == 3) {
         this.threeResult();
+        this.pickPane.paneName = '3 Panel Horizontal'
       }
-      if (this.pickPane == 4) {
-        this.fourResult();
-      }
-      if (this.pickPane == 5) {
+      // if (this.pickPane.id == 4) {
+      //   this.fourResult();
+      //   this.pickPane.paneName = '3 Panel Vertical'
+      // }
+      if (this.pickPane.id == 5) {
         this.fiveResult();
+        this.pickPane.paneName = '4 Panel'
       }
-      if (this.pickPane == 6) {
+      if (this.pickPane.id == 6) {
         this.sixResult();
+        this.pickPane.paneName = '3 Panel'
       }
-      if (this.pickPane == 7) {
+      if (this.pickPane.id == 7) {
         this.sevenResult();
+        this.pickPane.paneName = '4 Panel Horizontal Cols'
       }
     },
+<<<<<<< HEAD
 >>>>>>> dc3a783 (add option pane)
+=======
+    zeroResult() {
+      this.result.pane[0].size = null
+      this.result.pane[1].size = null
+      this.result.pane[2].size = null
+      this.result.pane[3].size = null
+      this.result.pane[4].size = null
+      this.result.pane[5].size = null
+      this.result.pane[6].size = null
+    },
+>>>>>>> b2a8900 (add loading)
     oneResult() {
       this.result.pane[0].size = 0
       this.result.pane[1].size = 50
@@ -810,7 +861,7 @@ export default {
     // WIP
     sixResult() {
       this.result.pane[0].size = 0
-      this.result.pane[1].size = 50
+      this.result.pane[1].size = 0
       this.result.pane[2].size = null
       this.result.pane[3].size = 0
       this.result.pane[4].size = 50
@@ -826,7 +877,7 @@ export default {
       this.result.pane[3].size = 33.33333333333333
       this.result.pane[4].size = null
       this.result.pane[5].size = 33.33333333333333
-      this.result.pane[6].size = 33.33333333333333
+      this.result.pane[6].size = 66.66666666666666
     },
 
 
@@ -860,14 +911,22 @@ export default {
     isBg() {
       return this.image.src ? '' : 'bg-[#E8F9FD]'
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b2a8900 (add loading)
     },
     isMargin() {
       return this.cropedImg ? 'mt-44' : 'mt-28'
     },
+<<<<<<< HEAD
     isLoading() {
       return this.loading ? 'block' : 'hidden'
 =======
 >>>>>>> dc3a783 (add option pane)
+=======
+    isLoading(){
+      return this.loading ? this.loadingImg : this.cropedImg;
+>>>>>>> b2a8900 (add loading)
     }
   }
 }
@@ -883,10 +942,14 @@ export default {
 
             <div :class="isBg"
 <<<<<<< HEAD
+<<<<<<< HEAD
               class="lg:flex-1 md:flex-1 flex-none rounded-xl 2xl:h-[25rem] 2xl:w-[20rem] lg:h-[20rem] lg:w-[18rem] md:w-72 md:h-72 w-full sm:h-64 h-52">
 =======
               class="order-1 lg:flex-1 md:flex-1 flex-none rounded-xl 2xl:h-[25rem] 2xl:w-[20rem] lg:h-[20rem] lg:w-[18rem] md:w-72 md:h-72 w-full sm:h-64 h-52">
 >>>>>>> dc3a783 (add option pane)
+=======
+              class="lg:flex-1 md:flex-1 flex-none rounded-xl 2xl:h-[25rem] 2xl:w-[20rem] lg:h-[20rem] lg:w-[18rem] md:w-72 md:h-72 w-full sm:h-64 h-52">
+>>>>>>> b2a8900 (add loading)
 
 
               <div
@@ -904,13 +967,19 @@ export default {
                 </cropper>
               </div>
 
+
+
               <div
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b2a8900 (add loading)
                 class="lg:mt-3 md:mt-3 sm:mt-3 mt-6 lg:text-base  flex-wrap md:text-base sm:text-sm text-xs flex flex-row gap-3 lg:justify-start md:justify-start justify-center items-center">
                 <select @change="image.src = selectExample" v-model="selectExample" name="example"
                   class="text-gray-500 border lg:w-1/5 w-full border-gray-400 rounded-md px-3 lg:py-1.5 md:py-1.5 py-2 focus:outline-none">
                   <option selected value="">Example</option>
                   <option v-text="ex.name" v-for="ex in example" :key="ex.id" :value="`${getLocation()}${ex.url}`">
+<<<<<<< HEAD
 
 
                   </option>
@@ -971,187 +1040,84 @@ export default {
                <button @click="rotateImg(-90)">
                 rotate
               </button> -->
+=======
+>>>>>>> b2a8900 (add loading)
 
+                  </option>
+                </select>
 
-                <button @click="getCrop(), setCanvas()" :class="isUploaded"
-                  class="font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white  rounded-md bg-[#0AA1DD]">
-                  Crop
-                </button>
+                <div class="relative lg:w-1/3 w-full">
+                  <div class="flex items-center">
+                    <input v-model="urlImg"
+                      class="relative border w-full border-gray-400 rounded-md pl-3 lg:pr-14 md:pr-14 pr-14 lg:py-1.5 md:py-1.5 py-2 focus:outline-none"
+                      type="url" placeholder="Link ....">
 
-                <button
-                  class=" font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white  rounded-md bg-[#0AA1DD]"
-                  @click="$refs.file.click()">
-                  <input class="hidden" type="file" ref="file" @change="loadImage($event)" accept="image/*">
-                  Load image
-                </button>
+                    <button
+                      class="absolute  right-1 font-semibold lg:px-3  lg:py-1 md:px-3 md:py-1 px-3 py-1 text-white  rounded-md bg-[#0AA1DD]"
+                      @click="upload()">
+                      <input class="hidden" type="file" ref="file" id="img-target" @change="loadImage($event)"
+                        accept="image/*">
+                      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                        aria-hidden="true" role="img" class="w-5 h-5" preserveAspectRatio="xMidYMid meet"
+                        viewBox="0 0 256 256">
+                        <path fill="#ffffff"
+                          d="M240 136v64a16 16 0 0 1-16 16H32a16 16 0 0 1-16-16v-64a16 16 0 0 1 16-16h48a8 8 0 0 1 0 16H32v64h192v-64h-48a8 8 0 0 1 0-16h48a16 16 0 0 1 16 16ZM85.7 77.7L120 43.3V128a8 8 0 0 0 16 0V43.3l34.3 34.4a8.2 8.2 0 0 0 11.4 0a8.1 8.1 0 0 0 0-11.4l-48-48a8.1 8.1 0 0 0-11.4 0l-48 48a8.1 8.1 0 0 0 11.4 11.4ZM200 168a12 12 0 1 0-12 12a12 12 0 0 0 12-12Z">
+                        </path>
+                      </svg>
+                    </button>
 
-                <button @click="openModal()"
-                  class="relative font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white  rounded-md bg-[#0AA1DD]">
-                  Pattern
-                </button>
-
-                <Teleport to="body">
-                  <Modal v-show="modal" class="lg:mt-0 md:mt-0 mt-12">
-                    <template #modalPane>
-                      <OnClickOutside @trigger="closeModal()">
-                        <div class="p-4 h-auto lg:w-80 md:w-80 w-60">
-                          <div class="flex flex-row flex-wrap gap-3 justify-center items-center">
-
-                            <div @click="this.$refs.pickpane1.click()"
-                              :class="pickPane == 1 ? 'bg-[#E8F9FD]' : 'bg-white'"
-                              class="cursor-pointer grid relative grid-rows-2 grid-flow-col lg:gap-1 md:gap-1 gap-0.5 lg:h-20 md:w-20 lg:w-20 md:h-20 w-16 h-16 p-2 rounded-md hover:bg-[#E8F9FD]">
-                              <input type="radio" ref="pickpane1" class="hidden" value="1" @change="changePane"
-                                v-model="pickPane">
-                              <div class="col-span-2 bg-[#0AA1DD] lg:p-4 md:p-4 p-2 rounded"></div>
-                              <div class="col-span-2 bg-[#0AA1DD] lg:p-4 md:p-4 p-2 rounded"></div>
-
-                            </div>
-                            <div @click="this.$refs.pickpane2.click()"
-                              :class="pickPane == 2 ? 'bg-[#E8F9FD]' : 'bg-white'"
-                              class="cursor-pointer grid relative grid-rows-3 grid-flow-col gap-0.5 lg:h-20 md:w-20 lg:w-20 md:h-20 w-16 h-16 p-2 rounded-md hover:bg-[#E8F9FD]">
-                              <input type="radio" ref="pickpane2" class="hidden" value="2" @change="changePane"
-                                v-model="pickPane">
-                              <div class="row-span-3 bg-[#0AA1DD] lg:p-4 md:p-4 p-2 rounded"></div>
-                              <div class="row-span-3 bg-[#0AA1DD] lg:p-4 md:p-4 p-2 rounded"></div>
-
-                            </div>
-                            <div @click="this.$refs.pickpane3.click()"
-                              :class="pickPane == 3 ? 'bg-[#E8F9FD]' : 'bg-white'"
-                              class="cursor-pointer grid relative grid-cols-3 grid-flow-row gap-0.5 lg:h-20 md:w-20 lg:w-20 md:h-20 w-16 h-16 p-2 rounded-md hover:bg-[#E8F9FD]">
-                              <input type="radio" ref="pickpane3" class="hidden" value="3" @change="changePane"
-                                v-model="pickPane">
-                              <div class="col-span-3 row-span-1 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
-                              <div class="col-span-3 row-span-1 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
-                              <div class="col-span-3 row-span-1 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
-
-                            </div>
-                            <div @click="this.$refs.pickpane4.click()"
-                              :class="pickPane == 4 ? 'bg-[#E8F9FD]' : 'bg-white'"
-                              class="cursor-pointer grid relative grid-rows-1 grid-flow-col gap-0.5 lg:h-20 md:w-20 lg:w-20 md:h-20 w-16 h-16 p-2 rounded-md hover:bg-[#E8F9FD]">
-                              <input type="radio" ref="pickpane4" class="hidden" value="4" @change="changePane"
-                                v-model="pickPane">
-                              <div class="row-span-3 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
-                              <div class="row-span-3 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
-                              <div class="row-span-3 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
-
-                            </div>
-                            <div @click="this.$refs.pickpane5.click()"
-                              :class="pickPane == 5 ? 'bg-[#E8F9FD]' : 'bg-white'"
-                              class="cursor-pointer grid relative grid-rows-2 grid-flow-col lg:gap-1 md:gap-1 gap-0.5 lg:h-20 md:w-20 lg:w-20 md:h-20 w-16 h-16 p-2 rounded-md hover:bg-[#E8F9FD]">
-                              <input type="radio" ref="pickpane5" class="hidden" value="5" @change="changePane"
-                                v-model="pickPane">
-                              <div class="col-span-2 bg-[#0AA1DD] lg:p-4 md:p-4 p-2.5 rounded"></div>
-                              <div class="col-span-2 bg-[#0AA1DD] lg:p-4 md:p-4 p-2.5 rounded"></div>
-                              <div class="col-span-2 bg-[#0AA1DD] lg:p-4 md:p-4 p-2.5 rounded"></div>
-                              <div class="col-span-2 bg-[#0AA1DD] lg:p-4 md:p-4 p-2.5 rounded"></div>
-
-                            </div>
-                            <div @click="this.$refs.pickpane6.click()"
-                              :class="pickPane == 6 ? 'bg-[#E8F9FD]' : 'bg-white'"
-                              class="cursor-pointer grid relative grid-rows-2 grid-flow-col gap-0.5 lg:h-20 md:w-20 lg:w-20 md:h-20 w-16 h-16 p-2 rounded-md hover:bg-[#E8F9FD]">
-                              <input type="radio" ref="pickpane5" class="hidden" value="6" @change="changePane"
-                                v-model="pickPane">
-                              <div class="row-span-2 bg-[#0AA1DD] lg:p-3 md:p-3 p-2.5 rounded"></div>
-                              <div class="row-span-1 col-span-4 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
-                              <div class="row-span-1 col-span-4 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
-                            </div>
-
-                            <div @click="this.$refs.pickpane7.click()"
-                              :class="pickPane == 7 ? 'bg-[#E8F9FD]' : 'bg-white'"
-                              class="cursor-pointer grid grid-rows-3 grid-flow-col gap-0.5 lg:h-20 md:w-20 lg:w-20 md:h-20 w-16 h-16 p-2 rounded-md hover:bg-[#E8F9FD]">
-                              <input ref="pickpane7" type="radio" class="hidden" value="7" @change="changePane"
-                                v-model="pickPane">
-                              <div class="row-span-3 bg-[#0AA1DD] lg:p-3 md:p-3 p-2.5 rounded"></div>
-                              <div class="col-span-2 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
-                              <div class="col-span-2 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
-                              <div class="col-span-2 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
-                            </div>
-
-                          </div>
-
-                        </div>
-                      </OnClickOutside>
-                    </template>
-                  </Modal>
-                </Teleport>
-
-
-                <!-- <div class="relative">
-
-                  <button @click="openDropdown()"
-                    class="relative font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white  rounded-md bg-[#0AA1DD]">
-                    Pattern
+                  </div>
+                </div>
+                <div class="flex flex-row gap-x-3 lg:w-auto  w-full">
+                  <button @click="getCrop" :class="isUploaded"
+                    class="flex-1 lg:w-auto w-1/2 inline-flex items-center justify-center font-semibold lg:px-3 lg:py-1.5 md:px-3 md:py-1.5 px-0 py-1.5 text-white text-sm rounded-md bg-[#0AA1DD]">
+                    <svg class="w-5 h-5 mx-2" xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                      preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                      <path fill="#ffffff"
+                        d="M17 15V7H9V5h8q.825 0 1.413.588Q19 6.175 19 7v8Zm0 8v-4H7q-.825 0-1.412-.587Q5 17.825 5 17V7H1V5h4V1h2v16h16v2h-4v4Z">
+                      </path>
+                    </svg>
+                    Crop
                   </button>
 
-                  <transition 
-                    enter-from-class="transform opacity-0 translate-y-12"
-                    enter-active-class="duration-300 ease-out" 
-                    enter-to-class="opacity-100 translate-y-0"
-                    leave-from-class="opacity-100 translate-y-0"
-                    leave-active-class="duration-300 ease-in"
-                    leave-to-class="transform opacity-0 translate-y-12"
-                    >
-                    
-                    <template v-if="dropdown" >
-                      <div class="absolute  inset-x-0">
-                        <div class="bg-[#E8F9FD] p-3 w-44 h-auto">
+                  <button :class="isCroped" @click="openModal()"
+                    class="flex-1 lg:w-auto w-1/2 inline-flex items-center justify-center font-semibold lg:px-3 lg:py-1.5 md:px-3 md:py-1.5 px-0 py-1.5 text-white text-sm rounded-md bg-[#0AA1DD]">
+                    <svg class="w-5 h-5 mx-2" xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                      preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32">
+                      <path fill="#ffffff"
+                        d="M28 4H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2ZM4 6h16v20H4Zm24 20h-6V6h6Z">
+                      </path>
+                    </svg>
+                    Panel
+                  </button>
 
-                        </div>
-                      </div>
-                    </template>
-
-                  </transition>
-                </div> -->
-
-
-
-                <!-- <button
-                  class=" font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white  rounded-md bg-[#0AA1DD]"
-                  @click="fourPaneResult()">
-                  4 panel
-                </button>
-
-                 <button
-                  class=" font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white  rounded-md bg-[#0AA1DD]"
-                  @click="twoPaneVerticalResult()">
-                  2 panel ver
-                </button>
-
-                 <button
-                  class=" font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white  rounded-md bg-[#0AA1DD]"
-                  @click="twoPaneHorizontalResult()">
-                  2 panel hor
-                </button>
-
-                <button
-                  class=" font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white  rounded-md bg-[#0AA1DD]"
-                  @click="threePaneHorizontalResult()">
-                  3 panel hor
-                </button>
-
-                <button
-                  class=" font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white  rounded-md bg-[#0AA1DD]"
-                  @click="threePaneHorVerResult()()">
-                  3 panel hor ver
-                </button> -->
+                </div>
 
               </div>
             </div>
 
-            <div
-              class="lg:order-2 md:order-2 order-3 flex-none bg-[#E8F9FD] border border-[#E8F9FD] lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60">
+            <div :class="[isBg, isMargin]"
+              class="flex-none text-center relative lg:mt-0 md:mt-0  lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60">
               <template v-if="this.cropedImg">
+
+                <span class="absolute -top-6 right-0 text-black rounded text-sm font-semibold py-0.5 px-3 bg-[#E8F9FD]"
+                  v-text="pickPane.paneName"></span>
+
                 <splitpanes
-                  class="bg-cover bg-[#E8F9FD] border border-[#E8F9FD] lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60"
+                  class="bg-cover mt-1 bg-[#E8F9FD] border border-[#E8F9FD] lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60"
                   @resized="pane[0].size = $event[0].size, resizeCanvasX()" :style="{
-                    backgroundImage: 'url(' + cropedImg + ')',
+                    backgroundImage: 'url(' + isLoading + ')',
                     backgroundRepeat: 'no-repeat',
                   }">
-                  <pane :min-size="result.pane[6].size" :max-size="result.pane[6].size">
+                  <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[6].size"
+                    :max-size="this.pickPane.id == 0 ? 100 : result.pane[6].size">
                     <splitpanes
                       @resized="pane[5].size = $event[2].size, pane[4].size = $event[1].size, pane[2].size = $event[0].size, resizeCanvasY1()"
                       horizontal>
-                      <pane :min-size="result.pane[0].size" :max-size="result.pane[0].size"
+                      <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[0].size"
+                        :max-size="this.pickPane.id == 0 ? 100 : result.pane[0].size"
                         :size="pane[2].size < 100 ? pane[3].size : pane[2].size"
                         class=" group hover:bg-blue-500/20 relative ">
                         <button @click="dlCanvas('4pane_img_1', 'canvas0')" class="justify-center group-hover:block hidden items-center bg-white lg:p-2 md:p-2 p-1.5  rounded-br-md absolute 
@@ -1165,7 +1131,8 @@ export default {
                           </svg>
                         </button>
                       </pane>
-                      <pane :min-size="result.pane[1].size" :max-size="result.pane[1].size"
+                      <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[1].size"
+                        :max-size="this.pickPane.id == 0 ? 100 : result.pane[1].size"
                         class=" group hover:bg-blue-500/20 relative "
                         :size="pane[2].size < 100 ? pane[3].size : pane[2].size">
                         <button @click="dlCanvas('4pane_img_2', 'canvas1')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-br-md absolute 
@@ -1180,7 +1147,8 @@ export default {
                         </button>
                       </pane>
 
-                      <pane :min-size="result.pane[2].size" :max-size="result.pane[2].size"
+                      <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[2].size"
+                        :max-size="this.pickPane.id == 0 ? 100 : result.pane[2].size"
                         class="group hover:bg-blue-500/20 relative"
                         :size="pane[2].size < 100 ? pane[3].size : pane[2].size">
                         <button @click="dlCanvas('4pane_img_3', 'canvas2')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-br-md absolute 
@@ -1196,11 +1164,13 @@ export default {
                       </pane>
                     </splitpanes>
                   </pane>
-                  <pane :min-size="result.pane[6].size" :max-size="result.pane[6].size">
+                  <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[6].size"
+                    :max-size="this.pickPane.id == 0 ? 100 : result.pane[6].size">
                     <splitpanes
                       @resized="pane[6].size = $event[2].size, pane[7].size = $event[1].size, pane[1].size = $event[0].size, resizeCanvasY2()"
                       horizontal>
-                      <pane :min-size="result.pane[3].size" :max-size="result.pane[3].size"
+                      <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[3].size"
+                        :max-size="this.pickPane.id == 0 ? 100 : result.pane[3].size"
                         class=" group hover:bg-blue-500/20 relative "
                         :size="pane[1].size < 100 ? pane[3].size : pane[1].size">
                         <button @click="dlCanvas('4pane_img_4', 'canvas3')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-bl-md absolute 
@@ -1214,7 +1184,8 @@ export default {
                           </svg>
                         </button>
                       </pane>
-                      <pane :min-size="result.pane[4].size" :max-size="result.pane[4].size"
+                      <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[4].size"
+                        :max-size="this.pickPane.id == 0 ? 100 : result.pane[4].size"
                         class=" group hover:bg-blue-500/20 relative "
                         :size="pane[1].size < 100 ? pane[3].size : pane[1].size">
                         <button @click="dlCanvas('4pane_img_5', 'canvas4')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-bl-md absolute 
@@ -1229,7 +1200,8 @@ export default {
                         </button>
                       </pane>
 
-                      <pane :min-size="result.pane[5].size" :max-size="result.pane[5].size"
+                      <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[5].size"
+                        :max-size="this.pickPane.id == 0 ? 100 : result.pane[5].size"
                         class=" group hover:bg-blue-500/20 relative "
                         :size="pane[1].size < 100 ? pane[3].size : pane[1].size">
                         <button @click="dlCanvas('4pane_img_6', 'canvas5')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-bl-md absolute 
@@ -1248,20 +1220,30 @@ export default {
                 </splitpanes>
               </template>
 
-              <div class="relative flex flex-row gap-3 justify-center items-center mt-3">
+              <div class="relative flex flex-row gap-3 justify-center items-center lg:mt-6 md:mt-6 mt-4">
                 <button :class="isCroped"
-                  class="absolute font-semibold -bottom-12 px-6 py-1.5 text-white  rounded-md bg-[#0AA1DD]" @click="
+                  class=" inline-flex items-center justify-center font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white text-sm rounded-md bg-[#0AA1DD]"
+                  @click="
                   dlCanvas('4pane_img_0', 'canvas0'),
                   dlCanvas('4pane_img_1', 'canvas1'),
                   dlCanvas('4pane_img_2', 'canvas2'),
                   dlCanvas('4pane_img_3', 'canvas3'),
                   dlCanvas('4pane_img_4', 'canvas4'),
                   dlCanvas('4pane_img_5', 'canvas5')">
+                  <svg class="w-5 h-5 mx-2" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+                    preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 256">
+                    <path fill="#ffffff"
+                      d="M238 136v64a14 14 0 0 1-14 14H32a14 14 0 0 1-14-14v-64a14 14 0 0 1 14-14h48a6 6 0 0 1 0 12H32a2 2 0 0 0-2 2v64a2 2 0 0 0 2 2h192a2 2 0 0 0 2-2v-64a2 2 0 0 0-2-2h-48a6 6 0 0 1 0-12h48a14 14 0 0 1 14 14Zm-114.2-3.8a5.8 5.8 0 0 0 8.4 0l48-48a5.9 5.9 0 0 0-8.4-8.4L134 113.5V24a6 6 0 0 0-12 0v89.5L84.2 75.8a5.9 5.9 0 0 0-8.4 8.4ZM198 168a10 10 0 1 0-10 10a10 10 0 0 0 10-10Z">
+                    </path>
+                  </svg>
                   Download All
+
                 </button>
               </div>
 >>>>>>> dc3a783 (add option pane)
 
+<<<<<<< HEAD
 
 
                 </div>
@@ -1423,6 +1405,10 @@ export default {
               </div>
 
             </div>
+=======
+            </div>
+
+>>>>>>> b2a8900 (add loading)
 
 
           </div>
