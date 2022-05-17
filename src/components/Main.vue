@@ -726,9 +726,6 @@ export default {
     isBg() {
       return this.image.src ? '' : 'bg-[#E8F9FD]'
     },
-    isBg2() {
-      return this.cropedImg ? '' : 'bg-[#E8F9FD]'
-    },
     isMargin() {
       return this.image.src ? 'mt-44' : 'mt-32'
     },
@@ -826,11 +823,11 @@ export default {
               </div>
             </div>
 
-            <div :class="[isBg2, isMargin]"
-              class="flex-none text-center relative lg:mt-0 md:mt-0  lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60">
+            <div :class="isMargin"
+              class="flex-none text-center bg-[#E8F9FD] relative lg:mt-0 md:mt-0 lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60">
               <template v-if="this.cropedImg">
 
-                <span class="absolute -top-6 right-0 text-black rounded text-sm font-semibold py-0.5 px-3 bg-[#E8F9FD]"
+                <span class="absolute -top-7 right-0 text-black rounded text-sm font-semibold py-0.5 px-3 bg-[#E8F9FD]"
                   v-text="pickPane.paneName"></span>
 
                   <div class="absolute bg-cover bg-center inset-0 top-2 flex justify-center items-center">
@@ -841,7 +838,7 @@ export default {
                       </svg>
                   </div>
                 <splitpanes 
-                  class="bg-cover mt-1 bg-[#E8F9FD] border border-[#E8F9FD] lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60"
+                  class="bg-cover bg-[#E8F9FD] border border-[#E8F9FD] lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60"
                   @resized="pane[0].size = $event[0].size, resizeCanvasX()" :style="{
                     backgroundImage: 'url(' + cropedImg + ')',
                     backgroundRepeat: 'no-repeat',
