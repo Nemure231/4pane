@@ -324,9 +324,7 @@ export default {
           ctx.drawImage(imageObj, 0, 0);
         };
       });
-
     },
-
     resizeCanvasY2() {
       this.loading = true
 
