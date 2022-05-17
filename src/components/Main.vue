@@ -100,7 +100,6 @@ export default {
           w: 0,
           h: 0,
         },
-
       ],
       pane: [
         {
@@ -110,7 +109,7 @@ export default {
           size: 33.33333333333333
         },
         {
-          size: 33.33333333333333
+          size: 50
         },
         {
           size: 33.33333333333333
@@ -646,7 +645,6 @@ export default {
       this.result.pane[0].size = 33.33333333333333
       this.result.pane[1].size = null
       this.result.pane[2].size = 33.33333333333333
-
       this.result.pane[3].size = 33.33333333333333
       this.result.pane[4].size = null
       this.result.pane[5].size = 33.33333333333333
@@ -656,7 +654,6 @@ export default {
       this.result.pane[0].size = 0
       this.result.pane[1].size = null
       this.result.pane[2].size = 0
-
       this.result.pane[3].size = 33.33333333333333
       this.result.pane[4].size = null
       this.result.pane[5].size = 33.33333333333333
@@ -673,7 +670,6 @@ export default {
       this.result.pane[6].size = 50
     },
 
-    // WIP
     sixResult() {
       this.result.pane[0].size = 0
       this.result.pane[1].size = 0
@@ -683,7 +679,6 @@ export default {
       this.result.pane[5].size = null
       this.result.pane[6].size = 50
     },
-    //wip
     sevenResult() {
       this.result.pane[0].size = 0
       this.result.pane[1].size = null
@@ -763,6 +758,7 @@ export default {
                   <option selected value="">Example</option>
                   <option v-text="ex.name" v-for="ex in example" :key="ex.id" :value="`${getLocation()}${ex.url}`">
 
+
                   </option>
                 </select>
 
@@ -813,6 +809,7 @@ export default {
                     </svg>
                     Panel
                   </button>
+
 
 
                 </div>
@@ -1003,6 +1000,7 @@ export default {
                 <canvas class="object-cover" ref="canvas5"
                   :width="canvas[5].w = coordinates.width * (percent - pane[0].size) / percent"
                   :height="canvas[5].h = coordinates.height * pane[6].size / percent"></canvas>
+
               </div>
             </div>
           </div>
