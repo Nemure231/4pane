@@ -11,16 +11,17 @@ export default {
   data() {
     return {
       // rotate: false,
+      restart: false,
+      percent: 100,
       loading: false,
+      modal: false,
+      urlImg: '',
+      selectExample: '',
       pickPane: {
         id: 0,
         paneName: 'Free Move',
       },
       dropdown: false,
-      modal: false,
-      urlImg: '',
-      // loadingImg:  'img/loading/1.svg',
-      selectExample: '',
       result: {
         pane: [
           {
@@ -63,8 +64,6 @@ export default {
           url: 'img/example/3.jpg'
         }
       ],
-      restart: false,
-      percent: 100,
       coordinates: {
         width: 0,
         height: 0,
@@ -132,15 +131,18 @@ export default {
     }
   },
   mounted() {
-    this.pane[5].size = this.pane[2].size
-    this.pane[4].size = this.pane[2].size
-    this.pane[6].size = this.pane[2].size
-    this.pane[7].size = this.pane[2].size
+    this.setDefaultPane()
   },
   updated() {
     this.setCanvas()
   },
   methods: {
+    setDefaultPane() {
+      this.pane[5].size = this.pane[2].size
+      this.pane[4].size = this.pane[2].size
+      this.pane[6].size = this.pane[2].size
+      this.pane[7].size = this.pane[2].size
+    },
     openModal() {
       return this.modal = !this.modal;
     },
@@ -270,7 +272,6 @@ export default {
     setCanvas5() {
       const yCanvas = this.coordinates.height / 3 * 2
       const xCanvas = this.coordinates.width / 2
-
       const checkXCanvas = this.restart ? this.canvas[0].w : xCanvas
       const checkYCanvas = this.restart ? this.canvas[3].h + this.canvas[4].h : yCanvas
       const checkCoorW = this.restart ? this.canvas[5].w : this.coordinates.width
@@ -291,7 +292,7 @@ export default {
       this.loading = true
 
       setTimeout(() => {
-       this.loading = false
+        this.loading = false
       }, "2000");
 
       this.restart = true
@@ -314,8 +315,8 @@ export default {
           ctx.drawImage(imageObj, 0, 0);
         };
       });
-      const ma = this.canvas[0].h + this.canvas[1].h
-      this.resizeImage(this.cropedImg, this.canvas[2].w, this.canvas[2].h, 0, ma, (url) => {
+      const yCanvas2 = this.canvas[0].h + this.canvas[1].h
+      this.resizeImage(this.cropedImg, this.canvas[2].w, this.canvas[2].h, 0, yCanvas2, (url) => {
         const canvas = this.$refs.canvas2;
         const ctx = canvas.getContext("2d");
         const imageObj = new Image();
@@ -331,7 +332,7 @@ export default {
       this.loading = true
 
       setTimeout(() => {
-       this.loading = false
+        this.loading = false
       }, "2000");
 
       this.restart = true
@@ -355,8 +356,8 @@ export default {
         };
       });
 
-      const ma = this.canvas[3].h + this.canvas[4].h
-      this.resizeImage(this.cropedImg, this.canvas[5].w, this.canvas[5].h, this.canvas[0].w, ma, (url) => {
+      const yCanvas5 = this.canvas[3].h + this.canvas[4].h
+      this.resizeImage(this.cropedImg, this.canvas[5].w, this.canvas[5].h, this.canvas[0].w, yCanvas5, (url) => {
         const canvas = this.$refs.canvas5;
         const ctx = canvas.getContext("2d");
         const imageObj = new Image();
@@ -370,7 +371,7 @@ export default {
       this.loading = true
 
       setTimeout(() => {
-       this.loading = false
+        this.loading = false
       }, "2000");
 
       this.restart = true
@@ -394,8 +395,8 @@ export default {
         };
       });
 
-      const ma = this.canvas[0].h + this.canvas[1].h
-      this.resizeImage(this.cropedImg, this.canvas[2].w, this.canvas[2].h, 0, ma, (url) => {
+      const yCanvas2 = this.canvas[0].h + this.canvas[1].h
+      this.resizeImage(this.cropedImg, this.canvas[2].w, this.canvas[2].h, 0, yCanvas2, (url) => {
         const canvas = this.$refs.canvas2;
         const ctx = canvas.getContext("2d");
         const imageObj = new Image();
@@ -425,8 +426,8 @@ export default {
         };
       });
 
-      const mas = this.canvas[3].h + this.canvas[4].h
-      this.resizeImage(this.cropedImg, this.canvas[5].w, this.canvas[5].h, this.canvas[0].w, mas, (url) => {
+      const yCanvas5 = this.canvas[3].h + this.canvas[4].h
+      this.resizeImage(this.cropedImg, this.canvas[5].w, this.canvas[5].h, this.canvas[0].w, yCanvas5, (url) => {
         const canvas = this.$refs.canvas5;
         const ctx = canvas.getContext("2d");
         const imageObj = new Image();
@@ -435,21 +436,9 @@ export default {
           ctx.drawImage(imageObj, 0, 0);
         };
       });
-
-    },
-    openDropdown() {
-      return this.dropdown = !this.dropdown
-    },
-    reset() {
-      this.image = {
-        src: null,
-        type: null
-      }
     },
     getBase64(imgUrl, callback) {
-
       var img = new Image();
-
       // onload fires when the image is fully loadded, and has width and height
       img.onload = function () {
 
@@ -515,10 +504,10 @@ export default {
         if (!validImageTypes.includes(fileType)) {
           alert('Please, choose the right format image! The avaiable format is JPG, JPEG, and PNG!');
         }
-        // SIZE IMAGE VALIDATION
-        // else if (fileSize >= 1045301 * 2) {
-        //   alert('The maximum size image to upload is 1MB, please reduce your image size before upload again!');
-        // }
+        //SIZE IMAGE VALIDATION
+        else if (fileSize >= 1045301 * 2) {
+          alert('The maximum size image to upload is 2MB, please reduce your image size before upload again!');
+        }
         else {
 
           // 1. Revoke the object URL, to allow the garbage collector to destroy the uploaded before file
@@ -615,6 +604,10 @@ export default {
         this.sevenResult();
         this.pickPane.paneName = '4 Horizontal Cols Panels'
       }
+      if (this.pickPane.id == 8) {
+        this.eightResult();
+        this.pickPane.paneName = '3 Horizontal Rows Panels'
+      }
     },
     zeroResult() {
       this.result.pane[0].size = null
@@ -653,17 +646,16 @@ export default {
       this.result.pane[5].size = 33.33333333333333
       this.result.pane[6].size = 100
     },
-    fourResult() {
-      this.result.pane[0].size = 0
-      this.result.pane[1].size = null
-      this.result.pane[2].size = 0
+    // fourResult() {
+    //   this.result.pane[0].size = 0
+    //   this.result.pane[1].size = null
+    //   this.result.pane[2].size = 0
 
-      this.result.pane[3].size = 33.33333333333333
-      this.result.pane[4].size = null
-      this.result.pane[5].size = 33.33333333333333
-      this.result.pane[6].size = 66.66666666666666
-    },
-
+    //   this.result.pane[3].size = 33.33333333333333
+    //   this.result.pane[4].size = null
+    //   this.result.pane[5].size = 33.33333333333333
+    //   this.result.pane[6].size = 66.66666666666666
+    // },
     fiveResult() {
       this.result.pane[0].size = 0
       this.result.pane[1].size = 50
@@ -673,8 +665,6 @@ export default {
       this.result.pane[5].size = null
       this.result.pane[6].size = 50
     },
-
-    // WIP
     sixResult() {
       this.result.pane[0].size = 0
       this.result.pane[1].size = 0
@@ -684,19 +674,24 @@ export default {
       this.result.pane[5].size = null
       this.result.pane[6].size = 50
     },
-    //wip
     sevenResult() {
       this.result.pane[0].size = 0
       this.result.pane[1].size = null
       this.result.pane[2].size = 0
-
       this.result.pane[3].size = 33.33333333333333
       this.result.pane[4].size = null
       this.result.pane[5].size = 33.33333333333333
       this.result.pane[6].size = 66.66666666666666
     },
-
-
+    eightResult() {
+      this.result.pane[0].size = 0
+      this.result.pane[1].size = 50
+      this.result.pane[2].size = null
+      this.result.pane[3].size = 0
+      this.result.pane[4].size = 50
+      this.result.pane[5].size = null
+      this.result.pane[6].size = 100
+    },
     // WIP
     // rotatePane() {
     //   this.rotate = !this.rotate
@@ -729,9 +724,123 @@ export default {
     isMargin() {
       return this.image.src ? 'mt-44' : 'mt-32'
     },
-    isLoading(){
+    isLoading() {
       return this.loading ? 'block' : 'hidden'
-    }
+    },
+    isSizePane012() {
+      return this.pane[2].size < 100 ? this.pane[3].size : this.pane[2].size
+    },
+    isSizePane345() {
+      return this.pane[1].size < 100 ? this.pane[3].size : this.pane[1].size
+    },
+    isMinSizePane0() {
+      return this.pickPane.id == 0 ? 0 : this.result.pane[0].size
+    },
+    isMaxSizePane0() {
+      return this.pickPane.id == 0 ? 100 : this.result.pane[0].size
+    },
+    isMinSizePane1() {
+      return this.pickPane.id == 0 ? 0 : this.result.pane[1].size
+    },
+    isMaxSizePane1() {
+      return this.pickPane.id == 0 ? 100 : this.result.pane[1].size
+    },
+    isMinSizePane2() {
+      return this.pickPane.id == 0 ? 0 : this.result.pane[2].size
+    },
+    isMaxSizePane2() {
+      return this.pickPane.id == 0 ? 100 : this.result.pane[2].size
+    },
+    isMinSizePane3() {
+      return this.pickPane.id == 0 ? 0 : this.result.pane[3].size
+    },
+    isMaxSizePane3() {
+      return this.pickPane.id == 0 ? 100 : this.result.pane[3].size
+    },
+    isMinSizePane4() {
+      return this.pickPane.id == 0 ? 0 : this.result.pane[4].size
+    },
+    isMaxSizePane4() {
+      return this.pickPane.id == 0 ? 100 : this.result.pane[4].size
+    },
+    isMinSizePane5() {
+      return this.pickPane.id == 0 ? 0 : this.result.pane[5].size
+    },
+    isMaxSizePane5() {
+      return this.pickPane.id == 0 ? 100 : this.result.pane[5].size
+    },
+    isMinSizePane6() {
+      if (this.pickPane.id == 0) {
+        return 0
+      } else if (this.pickPane.id == 8) {
+        return 0
+      } else {
+        return this.result.pane[6].size
+      }
+    },
+    isMaxSizePane6() {
+      if (this.pickPane.id == 0) {
+        return 100
+      } else if (this.pickPane.id == 8) {
+        return 50
+      } else {
+        return this.result.pane[6].size
+      }
+    },
+    isMinSizePane6_2() {
+      if (this.pickPane.id == 0) {
+        return 0
+      } else if (this.pickPane.id == 8) {
+        return 50
+      } else {
+        return this.result.pane[6].size
+      }
+    },
+    isMaxSizePane6_2() {
+      if (this.pickPane.id == 0) {
+        return 100
+      } else if (this.pickPane.id == 8) {
+        return 100
+      } else {
+        return this.result.pane[6].size
+      }
+    },
+    isWidthCanvas0() {
+      return this.canvas[0].w = this.restart ? (this.coordinates.width * this.pane[0].size / this.percent) : (this.coordinates.width / 2)
+    },
+    isHeightCanvas0() {
+      return this.canvas[0].h = this.coordinates.height * this.pane[2].size / this.percent
+    },
+    isWidthCanvas1() {
+      return this.canvas[1].w = this.restart ? (this.coordinates.width * this.pane[0].size / this.percent) : (this.coordinates.width / 2)
+    },
+    isHeightCanvas1() {
+      return this.canvas[1].h = this.coordinates.height * this.pane[4].size / this.percent
+    },
+    isWidthCanvas2() {
+      return this.canvas[2].w = this.restart ? (this.coordinates.width * this.pane[0].size / this.percent) : (this.coordinates.width / 2)
+    },
+    isHeightCanvas2() {
+      return this.canvas[2].h = this.coordinates.height * this.pane[5].size / this.percent
+    },
+    isWidthCanvas3() {
+      return this.canvas[3].w = this.coordinates.width * (this.percent - this.pane[0].size) / this.percent
+    },
+    isHeightCanvas3() {
+      return this.canvas[3].h = this.coordinates.height * this.pane[1].size / this.percent
+    },
+    isWidthCanvas4() {
+      return this.canvas[4].w = this.coordinates.width * (this.percent - this.pane[0].size) / this.percent
+    },
+    isHeightCanvas4() {
+      return this.canvas[4].h = this.coordinates.height * this.pane[7].size / this.percent
+    },
+    isWidthCanvas5() {
+      return this.canvas[5].w = this.coordinates.width * (this.percent - this.pane[0].size) / this.percent
+    },
+    isHeightCanvas5() {
+      return this.canvas[5].h = this.coordinates.height * this.pane[6].size / this.percent
+    },
   }
 }
 </script>
@@ -746,11 +855,10 @@ export default {
 
             <div :class="isBg"
               class="lg:flex-1 md:flex-1 flex-none rounded-xl 2xl:h-[25rem] 2xl:w-[20rem] lg:h-[20rem] lg:w-[18rem] md:w-72 md:h-72 w-full sm:h-64 h-52">
-
-
               <div
                 class="flex h-full flex-col items-center justify-center lg:w-full md:w-full sm:w-full w-[18rem] mx-auto">
                 <cropper ref="cropper" :src="image.src" :stencil-props="{
+                  // WIP
                   // aspectRatio: 16 / 11,
                   // aspectRatio: 11 / 16,
                   aspectRatio: 1 / 1,
@@ -758,16 +866,12 @@ export default {
                 }">
                 </cropper>
               </div>
-
-
-
               <div
                 class="lg:mt-3 md:mt-3 sm:mt-3 mt-6 lg:text-base  flex-wrap md:text-base sm:text-sm text-xs flex flex-row gap-3 lg:justify-start md:justify-start justify-center items-center">
                 <select @change="image.src = selectExample" v-model="selectExample" name="example"
                   class="text-gray-500 border lg:w-1/5 w-full border-gray-400 rounded-md px-3 lg:py-1.5 md:py-1.5 py-2 focus:outline-none">
                   <option selected value="">Example</option>
                   <option v-text="ex.name" v-for="ex in example" :key="ex.id" :value="`${getLocation()}${ex.url}`">
-
                   </option>
                 </select>
 
@@ -817,40 +921,34 @@ export default {
                     </svg>
                     Panel
                   </button>
-
                 </div>
-
               </div>
             </div>
-
             <div :class="isMargin"
               class="flex-none text-center bg-[#E8F9FD] relative lg:mt-0 md:mt-0 lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60">
               <template v-if="this.cropedImg">
-
                 <span class="absolute -top-7 right-0 text-black rounded text-sm font-semibold py-0.5 px-3 bg-[#E8F9FD]"
                   v-text="pickPane.paneName"></span>
-
-                  <div class="absolute bg-cover bg-center inset-0 top-2 flex justify-center items-center">
-                     <svg :class="isLoading"
-                       class="animate-spin h-12 w-12 text-[#2155cd]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                  </div>
-                <splitpanes 
+                <div class="absolute bg-cover bg-center inset-0 top-2 flex justify-center items-center">
+                  <svg :class="isLoading" class="animate-spin h-12 w-12 text-[#2155cd]"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                    </path>
+                  </svg>
+                </div>
+                <splitpanes
                   class="bg-cover bg-[#E8F9FD] border border-[#E8F9FD] lg:w-[18rem] lg:h-[18rem] md:w-64 md:h-64 w-60 h-60"
                   @resized="pane[0].size = $event[0].size, resizeCanvasX()" :style="{
                     backgroundImage: 'url(' + cropedImg + ')',
                     backgroundRepeat: 'no-repeat',
                   }">
-                  <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[6].size"
-                    :max-size="this.pickPane.id == 0 ? 100 : result.pane[6].size">
+                  <pane :min-size="isMinSizePane6" :max-size="isMaxSizePane6">
                     <splitpanes
                       @resized="pane[5].size = $event[2].size, pane[4].size = $event[1].size, pane[2].size = $event[0].size, resizeCanvasY1()"
                       horizontal>
-                      <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[0].size"
-                        :max-size="this.pickPane.id == 0 ? 100 : result.pane[0].size"
-                        :size="pane[2].size < 100 ? pane[3].size : pane[2].size"
+                      <pane :min-size="isMinSizePane0" :max-size="isMaxSizePane0" :size="isSizepane012"
                         class=" group hover:bg-blue-500/20 relative ">
                         <button @click="dlCanvas('4pane_img_1', 'canvas0')" class="justify-center group-hover:block hidden items-center bg-white lg:p-2 md:p-2 p-1.5  rounded-br-md absolute 
                         left-0">
@@ -863,10 +961,8 @@ export default {
                           </svg>
                         </button>
                       </pane>
-                      <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[1].size"
-                        :max-size="this.pickPane.id == 0 ? 100 : result.pane[1].size"
-                        class=" group hover:bg-blue-500/20 relative "
-                        :size="pane[2].size < 100 ? pane[3].size : pane[2].size">
+                      <pane :min-size="isMinSizePane1" :max-size="isMaxSizePane1"
+                        class=" group hover:bg-blue-500/20 relative " :size="isSizepane012">
                         <button @click="dlCanvas('4pane_img_2', 'canvas1')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-br-md absolute 
                       left">
                           <svg class="lg:w-5 lg:h-5 md:h-5 md:w-5 w-4 h-4 fill-[#2155CD]"
@@ -879,10 +975,8 @@ export default {
                         </button>
                       </pane>
 
-                      <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[2].size"
-                        :max-size="this.pickPane.id == 0 ? 100 : result.pane[2].size"
-                        class="group hover:bg-blue-500/20 relative"
-                        :size="pane[2].size < 100 ? pane[3].size : pane[2].size">
+                      <pane :min-size="isMinSizePane2" :max-size="isMaxSizePane2"
+                        class="group hover:bg-blue-500/20 relative" :size="isSizepane012">
                         <button @click="dlCanvas('4pane_img_3', 'canvas2')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-br-md absolute 
                       left">
                           <svg class="lg:w-5 lg:h-5 md:h-5 md:w-5 w-4 h-4 fill-[#2155CD]"
@@ -896,15 +990,12 @@ export default {
                       </pane>
                     </splitpanes>
                   </pane>
-                  <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[6].size"
-                    :max-size="this.pickPane.id == 0 ? 100 : result.pane[6].size">
+                  <pane :min-size="isMinSizePane6_2" :max-size="isMaxSizePane6_2">
                     <splitpanes
                       @resized="pane[6].size = $event[2].size, pane[7].size = $event[1].size, pane[1].size = $event[0].size, resizeCanvasY2()"
                       horizontal>
-                      <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[3].size"
-                        :max-size="this.pickPane.id == 0 ? 100 : result.pane[3].size"
-                        class=" group hover:bg-blue-500/20 relative "
-                        :size="pane[1].size < 100 ? pane[3].size : pane[1].size">
+                      <pane :min-size="isMinSizePane3" :max-size="isMaxSizePane3"
+                        class=" group hover:bg-blue-500/20 relative " :size="isSizepane345">
                         <button @click="dlCanvas('4pane_img_4', 'canvas3')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-bl-md absolute 
                       right-0">
                           <svg class="lg:w-5 lg:h-5 md:h-5 md:w-5 w-4 h-4 fill-[#2155CD]"
@@ -916,10 +1007,8 @@ export default {
                           </svg>
                         </button>
                       </pane>
-                      <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[4].size"
-                        :max-size="this.pickPane.id == 0 ? 100 : result.pane[4].size"
-                        class=" group hover:bg-blue-500/20 relative "
-                        :size="pane[1].size < 100 ? pane[3].size : pane[1].size">
+                      <pane :min-size="isMinSizePane4" :max-size="isMaxSizePane4"
+                        class=" group hover:bg-blue-500/20 relative " :size="isSizepane345">
                         <button @click="dlCanvas('4pane_img_5', 'canvas4')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-bl-md absolute 
                       right-0">
                           <svg class="lg:w-5 lg:h-5 md:h-5 md:w-5 w-4 h-4 fill-[#2155CD]"
@@ -932,10 +1021,8 @@ export default {
                         </button>
                       </pane>
 
-                      <pane :min-size="this.pickPane.id == 0 ? 0 : result.pane[5].size"
-                        :max-size="this.pickPane.id == 0 ? 100 : result.pane[5].size"
-                        class=" group hover:bg-blue-500/20 relative "
-                        :size="pane[1].size < 100 ? pane[3].size : pane[1].size">
+                      <pane :min-size="isMinSizePane5" :max-size="isMaxSizePane5"
+                        class=" group hover:bg-blue-500/20 relative " :size="isSizepane345">
                         <button @click="dlCanvas('4pane_img_6', 'canvas5')" class="group-hover:flex justify-center items-center hidden bg-white lg:p-2 md:p-2 p-1.5  rounded-bl-md absolute 
                         right-0">
                           <svg class="lg:w-5 lg:h-5 md:h-5 md:w-5 w-4 h-4 fill-[#2155CD]"
@@ -952,7 +1039,7 @@ export default {
                 </splitpanes>
               </template>
 
-              <div class="relative flex flex-row gap-3 justify-center items-center lg:mt-6 md:mt-6 mt-4">
+              <div class="relative flex flex-row gap-3 justify-center items-center lg:mt-[1.85rem] md:mt-[1.85rem] mt-4">
                 <button :class="isCroped"
                   class=" inline-flex items-center justify-center font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white text-sm rounded-md bg-[#0AA1DD]"
                   @click="
@@ -982,28 +1069,16 @@ export default {
           <div class="flex-row flex-nowrap hidden">
             <div class="flex-none">
               <div class="flex flex-col items-end">
-                <canvas class="object-cover"
-                  :width="canvas[0].w = restart ? (coordinates.width * pane[0].size / percent) : (coordinates.width / 2)"
-                  :height="canvas[0].h = coordinates.height * pane[2].size / percent" ref="canvas0"></canvas>
-                <canvas class="object-cover" ref="canvas1"
-                  :width="canvas[1].w = restart ? (coordinates.width * pane[0].size / percent) : (coordinates.width / 2)"
-                  :height="canvas[1].h = coordinates.height * pane[4].size / percent"></canvas>
-                <canvas class=" object-cover" ref="canvas2"
-                  :width="canvas[2].w = restart ? (coordinates.width * pane[0].size / percent) : (coordinates.width / 2)"
-                  :height="canvas[2].h = coordinates.height * pane[5].size / percent"></canvas>
+                <canvas class="object-cover" :width="isWidthCanvas0" :height="isHeightCanvas0" ref="canvas0"></canvas>
+                <canvas class="object-cover" ref="canvas1" :width="isWidthCanvas1" :height="isHeightCanvas1"></canvas>
+                <canvas class=" object-cover" ref="canvas2" :width="isWidthCanvas2" :height="isHeightCanvas2"></canvas>
               </div>
             </div>
             <div class="flex-none">
               <div class="flex flex-col items-start">
-                <canvas class="object-cover" ref="canvas3"
-                  :width="canvas[3].w = coordinates.width * (percent - pane[0].size) / percent"
-                  :height="canvas[3].h = coordinates.height * pane[1].size / percent"></canvas>
-                <canvas class="object-cover" ref="canvas4"
-                  :width="canvas[4].w = coordinates.width * (percent - pane[0].size) / percent"
-                  :height="canvas[4].h = coordinates.height * pane[7].size / percent"></canvas>
-                <canvas class="object-cover" ref="canvas5"
-                  :width="canvas[5].w = coordinates.width * (percent - pane[0].size) / percent"
-                  :height="canvas[5].h = coordinates.height * pane[6].size / percent"></canvas>
+                <canvas class="object-cover" ref="canvas3" :width="isWidthCanvas3" :height="isHeightCanvas3"></canvas>
+                <canvas class="object-cover" ref="canvas4" :width="isWidthCanvas4" :height="isHeightCanvas4"></canvas>
+                <canvas class="object-cover" ref="canvas5" :width="isWidthCanvas5" :height="isHeightCanvas5"></canvas>
               </div>
             </div>
           </div>
@@ -1025,7 +1100,7 @@ export default {
           <Modal v-if="modal" class="lg:mt-0 md:mt-0 mt-12">
             <template #modalPane>
               <div class="absolute right-0">
-                <div @click="closeModal()" class="cursor-pointer bg-red-100">
+                <div @click="closeModal()" class="cursor-pointer hover:bg-red-100">
                   <svg class=" w-8 h-8" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                     aria-hidden="true" role="img" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
                     <path fill="#bb3535"
@@ -1035,8 +1110,10 @@ export default {
                 </div>
               </div>
               <OnClickOutside @trigger="closeModal()">
-                <div class="px-4 pt-10 pb-4 h-auto lg:w-80 md:w-80 w-60">
-                  <p class="text-xs mb-3 bg-[#E8F9FD] py-0.5 px-1 font-medium rounded text-center">Choose and then start resize the panel.</p>
+                <div class="px-4 pt-10 pb-4 h-auto lg:w-80 md:w-80 w-72">
+                  <p class="text-xs mb-3 bg-[#E8F9FD] py-0.5 px-1 font-medium rounded text-center">
+                    Choose and then start resizing the panel according to the panel you have chosen.
+                  </p>
                   <div class="flex flex-row flex-wrap gap-3 justify-center items-center">
                     <div @click="this.$refs.pickpane0.click()" :class="pickPane.id == 0 ? 'bg-[#E8F9FD]' : 'bg-white'"
                       class="cursor-pointer grid relative grid-rows-2 grid-flow-col lg:gap-1 md:gap-1 gap-0.5 lg:h-20 md:w-20 lg:w-20 md:h-20 w-16 h-16 p-2 rounded-md hover:bg-[#E8F9FD]">
@@ -1069,6 +1146,7 @@ export default {
                       <div class="col-span-3 row-span-1 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
                       <div class="col-span-3 row-span-1 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
                     </div>
+                    <!-- WIP -->
                     <!-- <div @click="this.$refs.pickpane4.click()" :class="pickPane.id == 4 ? 'bg-[#E8F9FD]' : 'bg-white'"
                       class="cursor-pointer grid relative grid-rows-1 grid-flow-col gap-0.5 lg:h-20 md:w-20 lg:w-20 md:h-20 w-16 h-16 p-2 rounded-md hover:bg-[#E8F9FD]">
                       <input type="radio" ref="pickpane4" class="hidden" value="4" @change="changePane"
@@ -1076,7 +1154,6 @@ export default {
                       <div class="row-span-3 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
                       <div class="row-span-3 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
                       <div class="row-span-3 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
-
                     </div> -->
                     <div @click="this.$refs.pickpane5.click()" :class="pickPane.id == 5 ? 'bg-[#E8F9FD]' : 'bg-white'"
                       class="cursor-pointer grid relative grid-rows-2 grid-flow-col lg:gap-1 md:gap-1 gap-0.5 lg:h-20 md:w-20 lg:w-20 md:h-20 w-16 h-16 p-2 rounded-md hover:bg-[#E8F9FD]">
@@ -1106,9 +1183,15 @@ export default {
                       <div class="col-span-2 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
                       <div class="col-span-2 bg-[#0AA1DD] lg:p-2 md:p-2 p-1.5 rounded"></div>
                     </div>
-
+                    <div @click="this.$refs.pickpane8.click()" :class="pickPane.id == 8 ? 'bg-[#E8F9FD]' : 'bg-white'"
+                      class="cursor-pointer grid relative grid-rows-2 grid-flow-col lg:gap-1 md:gap-1 gap-0.5 lg:h-20 md:w-20 lg:w-20 md:h-20 w-16 h-16 p-2 rounded-md hover:bg-[#E8F9FD]">
+                      <input type="radio" ref="pickpane8" class="hidden" value="8" @change="changePane"
+                        v-model="pickPane.id">
+                      <div class="col-span-4 bg-[#0AA1DD] lg:p-4 md:p-4 p-2.5 rounded"></div>
+                      <div class="col-span-2 bg-[#0AA1DD] lg:p-4 md:p-4 p-2.5 rounded"></div>
+                      <div class="col-span-2 bg-[#0AA1DD] lg:p-4 md:p-4 p-2.5 rounded"></div>
+                    </div>
                   </div>
-
                 </div>
               </OnClickOutside>
             </template>
