@@ -11,6 +11,7 @@ export default {
   data() {
     return {
       // rotate: false,
+      loadImgTime: 0,
       restart: false,
       percent: 100,
       loading: false,
@@ -268,7 +269,6 @@ export default {
         };
       });
     },
-
     setCanvas5() {
       const yCanvas = this.coordinates.height / 3 * 2
       const xCanvas = this.coordinates.width / 2
@@ -290,12 +290,9 @@ export default {
 
     resizeCanvasY1() {
       this.loading = true
-
-      setTimeout(() => {
-        this.loading = false
-      }, "2000");
-
       this.restart = true
+      const startLoadImgTime = new Date().getTime();
+
       this.resizeImage(this.cropedImg, this.canvas[0].w, this.canvas[0].h, 0, 0, (url) => {
         const canvas = this.$refs.canvas0;
         const ctx = canvas.getContext("2d");
@@ -303,6 +300,7 @@ export default {
         imageObj.src = url;
         imageObj.onload = function () {
           ctx.drawImage(imageObj, 0, 0);
+          this.loadImgTime = new Date().getTime() - startLoadImgTime;
         };
       });
 
@@ -313,6 +311,7 @@ export default {
         imageObj.src = url;
         imageObj.onload = function () {
           ctx.drawImage(imageObj, 0, 0);
+          this.loadImgTime = new Date().getTime() - startLoadImgTime;
         };
       });
       const yCanvas2 = this.canvas[0].h + this.canvas[1].h
@@ -323,19 +322,20 @@ export default {
         imageObj.src = url;
         imageObj.onload = function () {
           ctx.drawImage(imageObj, 0, 0);
+          this.loadImgTime = new Date().getTime() - startLoadImgTime;
         };
       });
+      setTimeout(() => {
+        this.loading = false
+      }, this.loadImgTime);
 
     },
 
     resizeCanvasY2() {
       this.loading = true
-
-      setTimeout(() => {
-        this.loading = false
-      }, "2000");
-
       this.restart = true
+      const startLoadImgTime = new Date().getTime();
+
       this.resizeImage(this.cropedImg, this.canvas[3].w, this.canvas[3].h, this.canvas[0].w, 0, (url) => {
         const canvas = this.$refs.canvas3;
         const ctx = canvas.getContext("2d");
@@ -343,6 +343,7 @@ export default {
         imageObj.src = url;
         imageObj.onload = function () {
           ctx.drawImage(imageObj, 0, 0);
+          this.loadImgTime = new Date().getTime() - startLoadImgTime;
         };
       });
 
@@ -353,6 +354,7 @@ export default {
         imageObj.src = url;
         imageObj.onload = function () {
           ctx.drawImage(imageObj, 0, 0);
+          this.loadImgTime = new Date().getTime() - startLoadImgTime;
         };
       });
 
@@ -364,17 +366,20 @@ export default {
         imageObj.src = url;
         imageObj.onload = function () {
           ctx.drawImage(imageObj, 0, 0);
+          this.loadImgTime = new Date().getTime() - startLoadImgTime;
         };
       });
+      setTimeout(() => {
+        this.loading = false
+      }, this.loadImgTime);
     },
     resizeCanvasX() {
       this.loading = true
-
-      setTimeout(() => {
-        this.loading = false
-      }, "2000");
-
       this.restart = true
+
+      const startLoadImgTime = new Date().getTime();
+
+
       this.resizeImage(this.cropedImg, this.canvas[0].w, this.canvas[0].h, 0, 0, (url) => {
         const canvas = this.$refs.canvas0;
         const ctx = canvas.getContext("2d");
@@ -382,9 +387,9 @@ export default {
         imageObj.src = url;
         imageObj.onload = function () {
           ctx.drawImage(imageObj, 0, 0);
+          this.loadImgTime = new Date().getTime() - startLoadImgTime;
         };
       });
-
       this.resizeImage(this.cropedImg, this.canvas[0].w, this.canvas[1].h, 0, this.canvas[0].h, (url) => {
         const canvas = this.$refs.canvas1;
         const ctx = canvas.getContext("2d");
@@ -392,9 +397,9 @@ export default {
         imageObj.src = url;
         imageObj.onload = function () {
           ctx.drawImage(imageObj, 0, 0);
+          this.loadImgTime = new Date().getTime() - startLoadImgTime;
         };
       });
-
       const yCanvas2 = this.canvas[0].h + this.canvas[1].h
       this.resizeImage(this.cropedImg, this.canvas[2].w, this.canvas[2].h, 0, yCanvas2, (url) => {
         const canvas = this.$refs.canvas2;
@@ -403,6 +408,7 @@ export default {
         imageObj.src = url;
         imageObj.onload = function () {
           ctx.drawImage(imageObj, 0, 0);
+          this.loadImgTime = new Date().getTime() - startLoadImgTime;
         };
       });
 
@@ -413,9 +419,9 @@ export default {
         imageObj.src = url;
         imageObj.onload = function () {
           ctx.drawImage(imageObj, 0, 0);
+          this.loadImgTime = new Date().getTime() - startLoadImgTime;
         };
       });
-
       this.resizeImage(this.cropedImg, this.canvas[3].w, this.canvas[4].h, this.canvas[0].w, this.canvas[3].h, (url) => {
         const canvas = this.$refs.canvas4;
         const ctx = canvas.getContext("2d");
@@ -423,9 +429,9 @@ export default {
         imageObj.src = url;
         imageObj.onload = function () {
           ctx.drawImage(imageObj, 0, 0);
+          this.loadImgTime = new Date().getTime() - startLoadImgTime;
         };
       });
-
       const yCanvas5 = this.canvas[3].h + this.canvas[4].h
       this.resizeImage(this.cropedImg, this.canvas[5].w, this.canvas[5].h, this.canvas[0].w, yCanvas5, (url) => {
         const canvas = this.$refs.canvas5;
@@ -434,14 +440,17 @@ export default {
         imageObj.src = url;
         imageObj.onload = function () {
           ctx.drawImage(imageObj, 0, 0);
+          this.loadImgTime = new Date().getTime() - startLoadImgTime;
         };
       });
+      setTimeout(() => {
+        this.loading = false
+      }, this.loadImgTime);
     },
     getBase64(imgUrl, callback) {
       var img = new Image();
       // onload fires when the image is fully loadded, and has width and height
       img.onload = function () {
-
         var canvas = document.createElement("canvas");
         canvas.width = img.width;
         canvas.height = img.height;
@@ -1039,7 +1048,8 @@ export default {
                 </splitpanes>
               </template>
 
-              <div class="relative flex flex-row gap-3 justify-center items-center lg:mt-[1.85rem] md:mt-[1.85rem] mt-4">
+              <div
+                class="relative flex flex-row gap-3 justify-center items-center lg:mt-[1.85rem] md:mt-[1.85rem] mt-4">
                 <button :class="isCroped"
                   class=" inline-flex items-center justify-center font-semibold lg:px-6 lg:py-1.5 md:px-6 md:py-1.5 px-4 py-1.5 text-white text-sm rounded-md bg-[#0AA1DD]"
                   @click="
