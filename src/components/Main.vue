@@ -589,15 +589,15 @@ export default {
       }
       if (this.pickPane.id == 1) {
         this.oneResult();
-        this.pickPane.paneName = '2 Panel Horizontal'
+        this.pickPane.paneName = '2 Horizontal Panels'
       }
       if (this.pickPane.id == 2) {
         this.twoResult();
-        this.pickPane.paneName = '2 Panel Vertical'
+        this.pickPane.paneName = '2 Vertical Panels'
       }
       if (this.pickPane.id == 3) {
         this.threeResult();
-        this.pickPane.paneName = '3 Panel Horizontal'
+        this.pickPane.paneName = '3 Horizontal Panels'
       }
       // if (this.pickPane.id == 4) {
       //   this.fourResult();
@@ -605,15 +605,15 @@ export default {
       // }
       if (this.pickPane.id == 5) {
         this.fiveResult();
-        this.pickPane.paneName = '4 Panel'
+        this.pickPane.paneName = '4 Panels'
       }
       if (this.pickPane.id == 6) {
         this.sixResult();
-        this.pickPane.paneName = '3 Panel'
+        this.pickPane.paneName = '3 Cols Panels'
       }
       if (this.pickPane.id == 7) {
         this.sevenResult();
-        this.pickPane.paneName = '4 Panel Horizontal Cols'
+        this.pickPane.paneName = '4 Horizontal Cols Panels'
       }
     },
     zeroResult() {
