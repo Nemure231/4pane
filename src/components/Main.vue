@@ -907,7 +907,7 @@ export default {
                   </div>
                 </div>
                 <div class="flex flex-row gap-x-3 lg:w-auto  w-full">
-                  <button @click="getCrop" :class="isUploaded"
+                  <button @click="getCrop()" :class="isUploaded"
                     class="flex-1 lg:w-auto w-1/2 inline-flex items-center justify-center font-semibold lg:px-3 lg:py-1.5 md:px-3 md:py-1.5 px-0 py-1.5 text-white text-sm rounded-md bg-[#0AA1DD]">
                     <svg class="w-5 h-5 mx-2" xmlns="http://www.w3.org/2000/svg"
                       xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
